@@ -14,11 +14,6 @@ public class Labeler : MonoBehaviour
         node = GetComponent<Node>();
     }
 
-    private void Start()
-    {
-        label.alpha = 0f;
-    }
-
     private void Update()
     {
         DisplayLabel();
@@ -26,6 +21,15 @@ public class Labeler : MonoBehaviour
 
     void DisplayLabel()
     {
+        if (!Application.isPlaying)
+        {
+            label.alpha = 1f;
+        }
+        else if(Application.isPlaying)
+        {
+            label.alpha = 0f;
+        }
+
         if (!gridManager)
             return;
         label.text = $"{node.coords.x}, {node.coords.y}";
