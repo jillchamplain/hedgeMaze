@@ -23701,11 +23701,11 @@ PrefabInstance:
       objectReference: {fileID: 1481717713}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.x
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.y
-      value: 12
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31027,6 +31027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe08288851b64c94ea1e975e5bc7a97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originPos: {x: 1, y: 1}
 --- !u!1001 &1862980820
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,34 +22,65 @@ public class StalkerSpawner : MonoBehaviour
 
     void SpawnStalker()
     {
-        //Iterate left, right, up, down and checking "left" or "right" tiles
+        Debug.Log("Spawning Stalker...");
 
-        //For up (0, 1) check -1 and 1 for x (1,0)
-        //For down (0, -1) check -1 and 1 for x
+        List<Node> spawnableTiles = GetSpawnableTiles();
 
-        //For left (-1, 0) check -1 and 1 for y (0,1)
-        //For right (1,0) check -1 and 1 for y
+        int randIndex = Random.Range(0, spawnableTiles.Count);
 
-        List<Node> spawnableTiles = GetSpawnabelTilesInDirection(Vector2Int.right);
+        Debug.Log($"Spawning Stalker at {spawnableTiles[randIndex].gameObject}");
     }
 
-    List<Node> GetSpawnabelTilesInDirection(Vector2Int direction)
+    List<Node> GetSpawnableTiles()
+    {
+        List<Node> spawnableTiles = new List<Node>();
+        List<Node> leftSpawnTiles = GetSpawnableTilesInDirection(Vector2Int.left);
+        foreach (Node node in leftSpawnTiles)
+        {
+            spawnableTiles.Add(node);
+        }
+
+        List<Node> rightSpawnTiles = GetSpawnableTilesInDirection(Vector2Int.right);
+        foreach (Node node in rightSpawnTiles)
+        {
+            spawnableTiles.Add(node);
+        }
+
+        List<Node> upSpawnTiles = GetSpawnableTilesInDirection(Vector2Int.up);
+        foreach (Node node in upSpawnTiles)
+        {
+            spawnableTiles.Add(node);
+        }
+
+        List<Node> downSpawnTiles = GetSpawnableTilesInDirection(Vector2Int.down);
+        foreach (Node node in downSpawnTiles)
+        {
+            spawnableTiles.Add(node);
+        }
+
+        return spawnableTiles;
+    }
+
+    List<Node> GetSpawnableTilesInDirection(Vector2Int direction)
     {
         List<Node> spawnNodes = new List<Node>();
         
         Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
         //Iterate through dictionary keys in direction
-        for(int i = 0; i < gridManager.gridSize.x; i++)
+        for(int i = 1; i < gridManager.gridSize.x; i++)
         {
             Node theNode;
-            Vector2Int checkLocation = new Vector2Int(direction.x * i, direction.y * i);
+
+            Vector2Int checkLocationOffset = new Vector2Int(direction.x * i, direction.y * i);
+            Vector2Int checkLocation = originPos + checkLocationOffset;
+            //Debug.Log(checkLocation);
 
             //If within bounds of Grid
             if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < gridManager.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < gridManager.gridSize.y))
             {
                 theNode = grid[checkLocation];
-                if(theNode.type == ENodeType.NO_HEDGE)
+                if (theNode.type == ENodeType.NO_HEDGE)
                 {
                     //Rotate direction by 90 degrees counter clockwise
                     Vector2 perpendicularDirection = Vector2.Perpendicular(direction);
@@ -62,20 +93,34 @@ public class StalkerSpawner : MonoBehaviour
                     Node leftNode = grid[checkLocation + leftOffset];
                     Node rightNode = grid[checkLocation + rightOffset];
 
-                    Debug.Log($"Left Node at {checkLocation + leftOffset}");
-                    Debug.Log($"Right Node at {checkLocation + rightOffset}");
+                    if (CheckNodeForSpawn(leftNode, direction))
+                        spawnNodes.Add(leftNode);
+                    if(CheckNodeForSpawn(rightNode, direction))
+                        spawnNodes.Add(rightNode);
                 }
+                else if (theNode.type == ENodeType.HEDGE)
+                    break;
             }
         }
 
         return spawnNodes;
     }
 
-    bool CheckNode(Node node, Vector2Int direction)
+    bool CheckNodeForSpawn(Node node, Vector2Int direction)
     {
-        Vector2Int oppositeDirection = new Vector2Int(-direction.x, -direction.y);
-
         bool canSpawn = false;
+
+        if (node.type == ENodeType.HEDGE)
+            return false;
+
+        Vector2Int oppositeDirection = new Vector2Int(-direction.x, -direction.y);
+        Dictionary<Vector2Int, Node> grid = gridManager.Grid;
+
+        if (grid[node.coords + oppositeDirection].type == ENodeType.HEDGE)
+        {
+            canSpawn = true;
+            Debug.Log($"Node at {node.coords}");
+        }
 
         return canSpawn;
     }
