@@ -325,6 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coords: {x: 0, y: 0}
   type: 0
+  hedge: {fileID: 6482064170578812443}
 --- !u!1 &8352964289102950070
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +440,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
+--- !u!1 &6482064170578812443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4639197810243304657, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
+  m_PrefabInstance: {fileID: 1843475079081583306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8230959573562755926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7759535918536354204, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
