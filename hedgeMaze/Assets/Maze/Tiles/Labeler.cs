@@ -5,12 +5,13 @@ public class Labeler : MonoBehaviour
 {
     TextMeshPro label;
     GridManager gridManager;
-    Vector2Int coords = new Vector2Int();
+    Node node;
 
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
         label = GetComponentInChildren<TextMeshPro>();
+        node = GetComponent<Node>();
     }
 
     private void Update()
@@ -22,9 +23,6 @@ public class Labeler : MonoBehaviour
     {
         if (!gridManager)
             return;
-        coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
-        coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
-
-        label.text = $"{coords.x}, {coords.y}";
+        label.text = $"{node.coords.x}, {node.coords.y}";
     }
 }

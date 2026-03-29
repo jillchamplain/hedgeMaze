@@ -192,9 +192,17 @@ PrefabInstance:
       propertyPath: m_text
       value: 0, 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5233024903470008938, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7235043995079372375, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: m_Name
       value: Hedge Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
+      propertyPath: type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
