@@ -1,10 +1,5 @@
 using UnityEngine;
 
-<<<<<<< Updated upstream
-public class Node 
-{
-    [SerializeField] Vector2Int coords;
-=======
 public enum ENodeType
 {
     NO_HEDGE,
@@ -19,7 +14,6 @@ public class Node : MonoBehaviour
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
     [SerializeField] ENodeType type;
     GridManager gridManager;
->>>>>>> Stashed changes
     public Node(Vector2Int coords)
     {
         this.coords = coords;
