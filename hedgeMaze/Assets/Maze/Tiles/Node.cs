@@ -14,7 +14,7 @@ public enum ENodeType
 public class Node : MonoBehaviour 
 {
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
-    [SerializeField] ENodeType type;
+    [SerializeField] public ENodeType type;
     [SerializeField] GameObject hedge;
     GridManager gridManager;
     public Node(Vector2Int coords)
@@ -25,6 +25,8 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
+        coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
+        coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
         UpdateCoords();
     }
 
