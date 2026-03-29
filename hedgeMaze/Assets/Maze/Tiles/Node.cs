@@ -1,4 +1,6 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public enum ENodeType
 {
@@ -12,11 +14,29 @@ public enum ENodeType
 public class Node : MonoBehaviour 
 {
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
-    Vector3 lastPos;
     [SerializeField] ENodeType type;
+    [SerializeField] GameObject hedge;
+    GridManager gridManager;
+    public Node(Vector2Int coords)
+    {
+        this.coords = coords;
+    }
+
+    private void Awake()
+    {
+        gridManager = FindFirstObjectByType<GridManager>();
+        UpdateCoords();
+    }
+
+    private void Update()
+    {
+        UpdateCoords();
+        ChangeTypeTo(type);
+    }
     public void ChangeTypeTo(ENodeType newType)
     {
         type = newType;
+        //If not in Prefab Mode
         switch (type)
         {
             case ENodeType.NO_HEDGE:
@@ -26,41 +46,16 @@ public class Node : MonoBehaviour
                 hedge.SetActive(true);
                 break;
         }
-
-    }
-    GameObject hedge;
-    GridManager gridManager;
-    public Node(Vector2Int coords)
-    {
-        this.coords = coords;
-    }
-
-    private void OnValidate()
-    {
-        ChangeTypeTo(type);
-    }
-
-    private void Awake()
-    {
-        gridManager = FindFirstObjectByType<GridManager>();
-        hedge = GameObject.Find("Hedge");
-        UpdateCoords();
-    }
-
-    private void Update()
-    {
-            UpdateCoords();
-    }
-
-    private void LateUpdate()
-    {
-        lastPos = transform.position;
     }
 
     void UpdateCoords()
     {
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
-        gameObject.name = $"Tile {coords.x}_{coords.y}";
+        //If not in Prefab Mode
+        if (PrefabStageUtility.GetCurrentPrefabStage() == null)
+        {
+            gameObject.name = $"Tile {coords.x}_{coords.y}";
+        }
     }
 }
