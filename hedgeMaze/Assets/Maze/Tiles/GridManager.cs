@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+[ExecuteAlways]
 public class GridManager : MonoBehaviour
 {
     [SerializeField] Vector2Int gridSize;
@@ -14,24 +14,21 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        //CreateGrid();
-
+        CreateGrid();
     }
-    void CreateGrid()
+
+    public void CreateGrid()
     {
-        for (int x = 0; x < gridSize.x; x++)
-        {
-            for (int y = 0; y < gridSize.y; y++)
-            {
-                Vector2Int coords = new Vector2Int(x, y);
-                grid.Add(coords, new Node(coords));
 
-                //Grid Visualizer
-                /*GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Vector3 pos = new Vector3(coords.x * unityGridSize, 0f, coords.y * unityGridSize);
-                cube.transform.position = pos;
-                cube.transform.SetParent(transform);*/
-            }
+        Node[] nodes = FindObjectsByType(typeof(Node), FindObjectsSortMode.None) as Node[];
+        List<Node> nodesToAdd = new List<Node>();
+
+        foreach (Node nodeObject in nodes)
+        {
+            grid.Add(nodeObject.coords, nodeObject);
         }
+
+        //Debug.Log($"Grid has {grid.Count} tiles");
     }
+
 }

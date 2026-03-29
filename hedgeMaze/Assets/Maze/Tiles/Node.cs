@@ -12,6 +12,7 @@ public enum ENodeType
 public class Node : MonoBehaviour 
 {
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
+    Vector3 lastPos;
     [SerializeField] ENodeType type;
     GridManager gridManager;
     public Node(Vector2Int coords)
@@ -22,11 +23,18 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
+        UpdateCoords();
     }
 
     private void Update()
     {
-        UpdateCoords();
+        if(transform.position != lastPos)
+            UpdateCoords();
+    }
+
+    private void LateUpdate()
+    {
+        lastPos = transform.position;
     }
 
     void UpdateCoords()
