@@ -17,6 +17,7 @@ public class GridManager : MonoBehaviour
         CreateGrid();
     }
 
+    [ContextMenu("Generate Grid and Clear Duplicates")]
     public void CreateGrid()
     {
 
@@ -25,7 +26,17 @@ public class GridManager : MonoBehaviour
 
         foreach (Node nodeObject in nodes)
         {
-            grid.Add(nodeObject.coords, nodeObject);
+            // If there is already a tile in this spot, delete the new one to be added
+            // Otherwise, add the new one to the grid
+
+            if (grid.TryGetValue(nodeObject.coords, out Node node))
+            {
+                DestroyImmediate(nodeObject.gameObject);
+            }
+            else
+            {
+                grid.Add(nodeObject.coords, nodeObject);
+            }
         }
 
         //Debug.Log($"Grid has {grid.Count} tiles");
