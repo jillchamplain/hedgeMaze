@@ -35,6 +35,6 @@ public class Labeler : MonoBehaviour
 
         if (!gridManager)
             return;
-        label.text = $"{node.coords.x}, {node.coords.y}";
+        label.text = $"{node.coords.x},{node.coords.y}";
     }
 }

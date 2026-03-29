@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -15,6 +16,8 @@ public class Node : MonoBehaviour
 {
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
     [SerializeField] public ENodeType type;
+    [SerializeField] public List<GameObject> spawnPositions;
+
     [SerializeField] GameObject hedge;
     GridManager gridManager;
     public Node(Vector2Int coords)
@@ -25,6 +28,9 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
+
+
+
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
         UpdateCoords();
