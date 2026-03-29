@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1618729556406383673}
   - component: {fileID: 3938442839972347200}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Label Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.25}
-  m_SizeDelta: {x: 7, y: 5}
+  m_SizeDelta: {x: 9, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1618729556406383673
 MeshRenderer:
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0,0
+  m_text: 0, 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -272,6 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 119633143155350187}
   - component: {fileID: 1276384983624409662}
+  - component: {fileID: 8781120883239956591}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -309,6 +310,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65e8cc76812612499490f83c473fbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8781120883239956591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7235043995079372375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a138427ab4ff340869da48c53b90f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coords: {x: 0, y: 0}
+  type: 0
 --- !u!1 &8352964289102950070
 GameObject:
   m_ObjectHideFlags: 0

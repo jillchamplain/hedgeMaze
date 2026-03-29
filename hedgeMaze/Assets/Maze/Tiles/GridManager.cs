@@ -14,7 +14,7 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        CreateGrid();
+        //CreateGrid();
 
     }
     void CreateGrid()
@@ -26,9 +26,9 @@ public class GridManager : MonoBehaviour
                 Vector2Int coords = new Vector2Int(x, y);
                 grid.Add(coords, new Node(coords));
 
-                // Grid Visualizer
+                //Grid Visualizer
                 /*GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Vector3 pos = new Vector3(coords.x * unitGridSize, 0f, coords.y * unitGridSize);
+                Vector3 pos = new Vector3(coords.x * unityGridSize, 0f, coords.y * unityGridSize);
                 cube.transform.position = pos;
                 cube.transform.SetParent(transform);*/
             }
