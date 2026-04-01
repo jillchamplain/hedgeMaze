@@ -8,6 +8,7 @@ public enum ENodeType
     NONE,
     HEDGE,
     ROOT,
+    FOUNTAIN,
     NUM_TYPES
 }
 
@@ -19,8 +20,10 @@ public class Node : MonoBehaviour
     [SerializeField] public ENodeType type;
     [SerializeField] public List<GameObject> spawnPositions;
 
+    [Header("Type Models")]
     [SerializeField] GameObject hedge;
-    [SerializeField] GameObject root; 
+    [SerializeField] GameObject root;
+    [SerializeField] GameObject fountain;
     GridManager gridManager;
     public Node(Vector2Int coords)
     {
@@ -45,19 +48,22 @@ public class Node : MonoBehaviour
     {
         type = newType;
         //If not in Prefab Mode
+        hedge.SetActive(false);
+        root.SetActive(false);
+        fountain.SetActive(false);
+
         switch (type)
         {
             case ENodeType.NONE:
-                hedge.SetActive(false);
-                root.SetActive(false);
                 break;
             case ENodeType.HEDGE:
                 hedge.SetActive(true);
-                root.SetActive(false);
                 break;
             case ENodeType.ROOT:
                 root.SetActive(true);
-                hedge.SetActive(false);
+                break;
+            case ENodeType.FOUNTAIN:
+                fountain.SetActive(true);
                 break;
         }
     }
