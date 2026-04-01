@@ -80,7 +80,7 @@ public class StalkerSpawner : MonoBehaviour
             if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < gridManager.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < gridManager.gridSize.y))
             {
                 theNode = grid[checkLocation];
-                if (theNode.type == ENodeType.NO_HEDGE)
+                if (theNode.type == ENodeType.NONE)
                 {
                     //Rotate direction by 90 degrees counter clockwise
                     Vector2 perpendicularDirection = Vector2.Perpendicular(direction);

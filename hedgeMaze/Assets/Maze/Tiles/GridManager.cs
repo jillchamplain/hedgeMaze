@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-[ExecuteAlways]
 public class GridManager : MonoBehaviour
 {
     [SerializeField] public Vector2Int gridSize;

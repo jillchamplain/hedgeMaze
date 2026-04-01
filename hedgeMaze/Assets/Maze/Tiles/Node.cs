@@ -5,8 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public enum ENodeType
 {
-    NO_HEDGE,
+    NONE,
     HEDGE,
+    ROOT,
     NUM_TYPES
 }
 
@@ -19,6 +20,7 @@ public class Node : MonoBehaviour
     [SerializeField] public List<GameObject> spawnPositions;
 
     [SerializeField] GameObject hedge;
+    [SerializeField] GameObject root; 
     GridManager gridManager;
     public Node(Vector2Int coords)
     {
@@ -28,8 +30,6 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
-
-
 
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
@@ -47,11 +47,17 @@ public class Node : MonoBehaviour
         //If not in Prefab Mode
         switch (type)
         {
-            case ENodeType.NO_HEDGE:
+            case ENodeType.NONE:
                 hedge.SetActive(false);
+                root.SetActive(false);
                 break;
             case ENodeType.HEDGE:
                 hedge.SetActive(true);
+                root.SetActive(false);
+                break;
+            case ENodeType.ROOT:
+                root.SetActive(true);
+                hedge.SetActive(false);
                 break;
         }
     }
