@@ -28,7 +28,46 @@ public class StalkerSpawner : MonoBehaviour
 
         int randIndex = Random.Range(0, spawnableTiles.Count);
 
+        Node spawnTile = spawnableTiles[randIndex];
+        Vector2Int spawnDirection = GetDirectionOfSpawnableTile(spawnTile);
+
         Debug.Log($"Spawning Stalker at {spawnableTiles[randIndex].gameObject}");
+        Debug.Log($"Spawned in direction {spawnDirection}");
+    }
+
+    Vector2Int GetDirectionOfSpawnableTile(Node theTile)
+    {
+        Vector2Int direction = Vector2Int.zero;
+
+        List<Node> rightTiles = GetSpawnableTilesInDirection(Vector2Int.right);
+        foreach (Node node in rightTiles)
+        {
+            if (node == theTile)
+                return Vector2Int.right;
+        }
+
+        List<Node> leftTiles = GetSpawnableTilesInDirection(Vector2Int.left);
+        foreach(Node node in leftTiles)
+        {
+            if (node == theTile)
+                return Vector2Int.left;
+        }
+
+        List<Node> upTiles = GetSpawnableTilesInDirection(Vector2Int.up);
+        foreach (Node node in upTiles)
+        {
+            if (node == theTile)
+                return Vector2Int.up;
+        }
+
+        List<Node> downTiles = GetSpawnableTilesInDirection(Vector2Int.down);
+        foreach( Node node in downTiles)
+        {
+            if(node == theTile)
+                return Vector2Int.down;
+        }
+
+        return direction;
     }
 
     List<Node> GetSpawnableTiles()

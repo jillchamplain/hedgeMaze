@@ -8,7 +8,6 @@ public enum ENodeType
     NONE,
     HEDGE,
     ROOT,
-    FOUNTAIN,
     NUM_TYPES
 }
 
@@ -23,7 +22,6 @@ public class Node : MonoBehaviour
     [Header("Type Models")]
     [SerializeField] GameObject hedge;
     [SerializeField] GameObject root;
-    [SerializeField] GameObject fountain;
     GridManager gridManager;
     public Node(Vector2Int coords)
     {
@@ -50,7 +48,6 @@ public class Node : MonoBehaviour
         //If not in Prefab Mode
         hedge.SetActive(false);
         root.SetActive(false);
-        fountain.SetActive(false);
 
         switch (type)
         {
@@ -61,9 +58,6 @@ public class Node : MonoBehaviour
                 break;
             case ENodeType.ROOT:
                 root.SetActive(true);
-                break;
-            case ENodeType.FOUNTAIN:
-                fountain.SetActive(true);
                 break;
         }
     }
