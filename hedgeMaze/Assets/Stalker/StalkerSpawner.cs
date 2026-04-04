@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 public class StalkerSpawner : MonoBehaviour
 {
     GridManager gridManager;
+    [SerializeField] Transform playerTransform;
     [SerializeField] Vector2Int originPos;
 
     void Start()
@@ -17,7 +18,7 @@ public class StalkerSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        originPos = new Vector2Int((int)playerTransform.position.x, (int)playerTransform.position.y);
     }
 
     void SpawnStalker()
