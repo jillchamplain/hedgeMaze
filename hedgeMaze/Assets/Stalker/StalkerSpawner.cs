@@ -31,8 +31,32 @@ public class StalkerSpawner : MonoBehaviour
         Node spawnTile = spawnableTiles[randIndex];
         Vector2Int spawnDirection = GetDirectionOfSpawnableTile(spawnTile);
 
+        Vector2Int newSpawnDirection = new Vector2Int(-spawnDirection.x, -spawnDirection.y); //Reverse direction of search direction
+
+        int leftRightPos = 0;
+
+        //Adjust for if left or right
+        if (newSpawnDirection.x == 0)
+        {
+            if (spawnTile.coords.x < originPos.x)
+                leftRightPos = 1;
+            else
+                leftRightPos = -1;
+
+                newSpawnDirection.x = leftRightPos;
+        }
+        else if (newSpawnDirection.y == 0)
+        {
+            if (spawnTile.coords.y < originPos.y)
+                leftRightPos = 1;
+            else
+                leftRightPos = -1;
+            newSpawnDirection.y = leftRightPos;
+        }
+
         Debug.Log($"Spawning Stalker at {spawnableTiles[randIndex].gameObject}");
         Debug.Log($"Spawned in direction {spawnDirection}");
+        Debug.Log($"Spawn position to use is {newSpawnDirection}");
     }
 
     Vector2Int GetDirectionOfSpawnableTile(Node theTile)

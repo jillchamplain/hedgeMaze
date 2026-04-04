@@ -486,13 +486,16 @@ MonoBehaviour:
   coords: {x: 0, y: 0}
   type: 0
   spawnPositions:
-  - {fileID: 3054478182709318734}
-  - {fileID: 4421152614195785984}
-  - {fileID: 1111814696777222299}
-  - {fileID: 219995178491202735}
+  - gameObject: {fileID: 3054478182709318734}
+    direction: {x: -1, y: 1}
+  - gameObject: {fileID: 4421152614195785984}
+    direction: {x: 1, y: 1}
+  - gameObject: {fileID: 1111814696777222299}
+    direction: {x: -1, y: -1}
+  - gameObject: {fileID: 219995178491202735}
+    direction: {x: 1, y: -1}
   hedge: {fileID: 6482064170578812443}
   root: {fileID: 3224461643358166844}
-  fountain: {fileID: 946497244594447731}
 --- !u!1 &8352964289102950070
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,11 +715,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90d4437fe74225f4ea6f45c600fee19d, type: 3}
---- !u!1 &946497244594447731 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5919080477695410651, guid: 90d4437fe74225f4ea6f45c600fee19d, type: 3}
-  m_PrefabInstance: {fileID: 6847281710125294760}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4946487310673869670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1991464526548918222, guid: 90d4437fe74225f4ea6f45c600fee19d, type: 3}

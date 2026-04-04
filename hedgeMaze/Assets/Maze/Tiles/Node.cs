@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -17,11 +18,20 @@ public class Node : MonoBehaviour
 {
     [SerializeField] public Vector2Int coords = Vector2Int.zero;
     [SerializeField] public ENodeType type;
-    [SerializeField] public List<GameObject> spawnPositions;
+
+    [Serializable]
+    public struct SpawnPosition
+    {
+        [SerializeField] public GameObject gameObject;
+        [SerializeField] public Vector2Int direction; 
+    }
+
+    [SerializeField] public List<SpawnPosition> spawnPositions;
 
     [Header("Type Models")]
     [SerializeField] GameObject hedge;
     [SerializeField] GameObject root;
+
     GridManager gridManager;
     public Node(Vector2Int coords)
     {
