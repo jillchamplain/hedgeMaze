@@ -8,6 +8,7 @@ public class StalkerSpawner : MonoBehaviour
     GridManager gridManager;
     [SerializeField] Transform playerTransform;
     [SerializeField] Vector2Int originPos;
+    [SerializeField] GameObject stalkerPrefab;
 
     void Start()
     {
@@ -33,6 +34,7 @@ public class StalkerSpawner : MonoBehaviour
         Vector2Int spawnDirection = GetDirectionOfSpawnableTile(spawnTile);
 
         Vector2Int newSpawnDirection = new Vector2Int(-spawnDirection.x, -spawnDirection.y); //Reverse direction of search direction
+        Vector2Int stalkerDirectionToPlayer = newSpawnDirection;
 
         int leftRightPos = 0;
 
@@ -55,9 +57,12 @@ public class StalkerSpawner : MonoBehaviour
             newSpawnDirection.y = leftRightPos;
         }
 
-        Debug.Log($"Spawning Stalker at {spawnableTiles[randIndex].gameObject}");
+        /*Debug.Log($"Spawning Stalker at {spawnableTiles[randIndex].gameObject}");
         Debug.Log($"Spawned in direction {spawnDirection}");
-        Debug.Log($"Spawn position to use is {newSpawnDirection}");
+        Debug.Log($"Spawn position to use is {newSpawnDirection}");*/
+
+        GameObject theStalker = Instantiate(stalkerPrefab, spawnTile.GetSpawnPositionAt(newSpawnDirection).gameObject.transform.position, Quaternion.identity);
+        theStalker.GetComponent<Stalker>().SetDirectionToPlayer(stalkerDirectionToPlayer);
     }
 
     Vector2Int GetDirectionOfSpawnableTile(Node theTile)
@@ -183,7 +188,7 @@ public class StalkerSpawner : MonoBehaviour
         if (grid[node.coords + oppositeDirection].type == ENodeType.HEDGE)
         {
             canSpawn = true;
-            Debug.Log($"Node at {node.coords}");
+            //Debug.Log($"Node at {node.coords}");
         }
 
         return canSpawn;

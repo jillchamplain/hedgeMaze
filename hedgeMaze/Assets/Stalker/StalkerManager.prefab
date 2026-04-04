@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe08288851b64c94ea1e975e5bc7a97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originPos: {x: 0, y: 0}
+  playerTransform: {fileID: 0}
+  originPos: {x: 1, y: 1}
+  stalkerPrefab: {fileID: 0}

@@ -52,9 +52,6 @@ public class GridManager : MonoBehaviour
         {
             grid.Add(pair.Key, pair.Value);
         }
-
-        Debug.Log($"{grid[new Vector2Int(3, 0)]} is in grid");
-        Debug.Log($"{grid[new Vector2Int(1, 3)]} is in grid");
     }
 
 }

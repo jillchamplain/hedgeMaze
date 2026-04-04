@@ -27,6 +27,16 @@ public class Node : MonoBehaviour
     }
 
     [SerializeField] public List<SpawnPosition> spawnPositions;
+    public SpawnPosition GetSpawnPositionAt(Vector2Int pos)
+    {
+        SpawnPosition nullSpawn = new SpawnPosition();
+        foreach (SpawnPosition spawnPosition in spawnPositions)
+        {
+            if(spawnPosition.direction == pos)
+                return spawnPosition;
+        }
+        return nullSpawn;
+    }
 
     [Header("Type Models")]
     [SerializeField] GameObject hedge;
