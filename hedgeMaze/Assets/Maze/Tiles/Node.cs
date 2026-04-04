@@ -62,6 +62,18 @@ public class Node : MonoBehaviour
         UpdateCoords();
         ChangeTypeTo(type);
     }
+
+    public void Cut()
+    {
+        if (type == ENodeType.HEDGE)
+            ChangeTypeTo(ENodeType.NONE);
+    }
+
+    public void Grow()
+    {
+        if(type == ENodeType.ROOT)
+            ChangeTypeTo(ENodeType.HEDGE);
+    }
     public void ChangeTypeTo(ENodeType newType)
     {
         type = newType;
