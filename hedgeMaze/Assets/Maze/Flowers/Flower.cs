@@ -18,4 +18,9 @@ public class Flower : MonoBehaviour
     {
         flowerPatch.ManageFlowers();
     }
+
+    void Water()
+    {
+        
+    }
 }
