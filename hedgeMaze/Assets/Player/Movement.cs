@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -39,6 +39,11 @@ public class Movement : MonoBehaviour
         //Debug.Log("Getting input");
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+
+        if (horizontalInput > 0 || verticalInput > 0)
+            CameraEffects.instance.Bob();
+        else
+            CameraEffects.instance.StopBob();
     }
 
     void Move()
