@@ -3,12 +3,18 @@ using UnityEngine;
 using System.Collections.Generic;
 public class Inventory : MonoBehaviour
 {
+    [HideInInspector] public static Inventory instance;
     [SerializeField] List<Tool> tools = new List<Tool>();
     Tool curToolEquipped;
 
+    private void Start()
+    {
+        if(instance == null)
+            instance = this;
+    }
     void UnEquipTool()
     {
-        foreach(Tool tool in tools)
+        foreach (Tool tool in tools)
         {
             tool.isEquipped = false;
         }
@@ -16,9 +22,9 @@ public class Inventory : MonoBehaviour
     }
     void EquipTool(string nameOfTool)
     {
-        foreach(Tool tool in tools)
+        foreach (Tool tool in tools)
         {
-            if(tool.name == nameOfTool)
+            if (tool.name == nameOfTool)
             {
                 tool.isEquipped = true;
                 curToolEquipped = tool;
@@ -28,5 +34,11 @@ public class Inventory : MonoBehaviour
                 tool.isEquipped = false;
             }
         }
+    }
+
+    void UseCurrrentTool()
+    {
+        if (curToolEquipped)
+            curToolEquipped.Use();
     }
 }
