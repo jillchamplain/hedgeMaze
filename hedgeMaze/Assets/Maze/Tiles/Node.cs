@@ -40,6 +40,7 @@ public class Node : MonoBehaviour
 
     [Header("Types")]
     [SerializeField] GameObject hedgeModel;
+    [SerializeField] GameObject hedgeParticlePF;
     [SerializeField] GameObject rootModel;
 
     GridManager gridManager;
@@ -76,7 +77,11 @@ public class Node : MonoBehaviour
     public void Cut()
     {
         if (type == ENodeType.HEDGE)
+        {
             ChangeTypeTo(ENodeType.NONE);
+            GameObject hedgeParticle = Instantiate(hedgeParticlePF, transform.position, Quaternion.identity);
+            hedgeParticle.GetComponent<Particle>().Play();
+        }
     }
 
     public void Grow()
