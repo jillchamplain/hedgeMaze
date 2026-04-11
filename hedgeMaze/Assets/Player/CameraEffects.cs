@@ -9,12 +9,13 @@ public class CameraEffects : MonoBehaviour
     [SerializeField] float amount = .002f;
     [Range(1f, 30f)]
     [SerializeField] float frequency = 10f;
-    [Range(10f, 100f)]
-    [SerializeField] float smooth = 10f;
+    [Range(1f, 100f)]
+    [SerializeField] float returnSpeed = 4f;
 
 
     static Vector3 startPos = Vector3.zero;
-
+    Vector3 pos = Vector3.zero;
+    float time = 0;
     private void Awake()
     {
         if(instance == null)
@@ -29,18 +30,31 @@ public class CameraEffects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Camera.main.transform.localPosition = startPos + pos;
+        pos.y = Mathf.Sin(time) * amount;
     }
 
     public void Bob(float speed)
     {
-        Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Sin(Time.time * frequency * speed) * amount;
-        Camera.main.transform.localPosition = startPos + pos;
+        time += Time.deltaTime * speed * frequency;
+
+        if (time >= 2 * Mathf.PI) { time = 0; }
+
     }
 
     public void StopBob()
     {
-        Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, startPos, 1 * Time.deltaTime);
+        if (time > 3 * Mathf.PI / 2)
+        {
+            time = Mathf.Lerp(time, 2 * Mathf.PI, Time.deltaTime * returnSpeed);
+        }
+        else if (time > Mathf.PI / 2)
+        {
+            time = Mathf.Lerp(time, Mathf.PI, Time.deltaTime * returnSpeed);
+        }
+        else
+        {
+            time = Mathf.Lerp(time, 0, Time.deltaTime * returnSpeed);
+        }
     }
 }

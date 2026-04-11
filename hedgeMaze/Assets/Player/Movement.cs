@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (horizontalInput > 0 || verticalInput > 0)
+        if (rb.linearVelocity.magnitude > 0.2f)
             CameraEffects.instance.Bob(rb.linearVelocity.magnitude);
         else
             CameraEffects.instance.StopBob();
