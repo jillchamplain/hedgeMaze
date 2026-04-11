@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2,2
+  m_text: 0,0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a138427ab4ff340869da48c53b90f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coords: {x: 2, y: 2}
+  coords: {x: 0, y: 0}
   type: 1
   spawnPositions:
   - gameObject: {fileID: 3054478182709318734}
@@ -495,6 +495,7 @@ MonoBehaviour:
   - gameObject: {fileID: 219995178491202735}
     direction: {x: 1, y: -1}
   hedgeModel: {fileID: 6482064170578812443}
+  hedgeParticlePF: {fileID: 2564124401443755877}
   rootModel: {fileID: 3224461643358166844}
 --- !u!1 &8352964289102950070
 GameObject:
@@ -664,6 +665,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
+--- !u!1 &2564124401443755877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4179568465205933487, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
+  m_PrefabInstance: {fileID: 1843475079081583306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6482064170578812443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4639197810243304657, guid: 6ab8cb6325b590f43bce420de8f9d0bb, type: 3}
