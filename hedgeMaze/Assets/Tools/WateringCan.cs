@@ -2,9 +2,18 @@ using UnityEngine;
 
 public class WateringCan : Tool
 {
+    [SerializeField] Movement playerMovement;
     [SerializeField] float curWaterAmount;
+    public float GetWaterAmount() {  return curWaterAmount; }
     [SerializeField] float maxWaterAmount;
+    public float GetMaxWaterAmount() { return maxWaterAmount; }
     [SerializeField] float waterDepleteAmount;
+    [SerializeField] float passiveWaterDepleteAmount;
+    [SerializeField] float sprintWaterDepleteAmount;
+
+    bool shouldSprintDeplete = false;
+    void SetSprintDeplete(bool newSprintDeplete) {  shouldSprintDeplete = newSprintDeplete;}
+
     void Start()
     {
         curWaterAmount = maxWaterAmount;
@@ -14,6 +23,18 @@ public class WateringCan : Tool
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        if (!playerMovement.GetSprinting())
+        {
+            PassiveDepleteWater();
+        }
+        else
+        {
+            SprintDepleteWater();
+        }
     }
 
     public override void Equip()
@@ -34,6 +55,20 @@ public class WateringCan : Tool
     public void Water()
     {
         curWaterAmount -= waterDepleteAmount;
+        if(curWaterAmount < 0 )
+            curWaterAmount = 0;
+    }
+
+    public void PassiveDepleteWater()
+    {
+        curWaterAmount -= passiveWaterDepleteAmount * Time.deltaTime;
+        if( curWaterAmount < 0 )
+            curWaterAmount = 0;
+    }
+
+    public void SprintDepleteWater()
+    {
+        curWaterAmount -= sprintWaterDepleteAmount * Time.deltaTime;
         if(curWaterAmount < 0 )
             curWaterAmount = 0;
     }
