@@ -20,6 +20,10 @@ public class CameraEffects : MonoBehaviour
     {
         if(instance == null)
             instance = this;
+        else
+        {
+            Destroy(gameObject);
+        }
 
     }
     void Start()
