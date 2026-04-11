@@ -4,16 +4,45 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    [HideInInspector] public static GridManager instance;
     [SerializeField] public Vector2Int gridSize;
     [SerializeField] public int unityGridSize = 1;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] Vector2Int playerGridPosition;
+    [SerializeField] Vector2Int lastPlayerGridPosition;
     public int UnityGridSize { get { return unityGridSize; } }
 
     Dictionary<Vector2Int, Node> grid = new Dictionary<Vector2Int, Node>();
     public Dictionary<Vector2Int, Node> Grid { get { return grid; } }
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
     private void Start()
     {
         CreateGrid();
+        playerGridPosition = GetPlayerGridPosition();
+    }
+
+    private void Update()
+    {
+        if(GetPlayerGridPosition() != playerGridPosition)
+        {
+            lastPlayerGridPosition = playerGridPosition;
+            playerGridPosition = GetPlayerGridPosition();
+
+            grid[lastPlayerGridPosition].LeaveNode();
+            grid[playerGridPosition].EnterNode();
+        }
+    }
+
+    public Vector2Int GetPlayerGridPosition()
+    {
+        Vector2Int playerPos = new Vector2Int((int)playerTransform.position.x, (int)playerTransform.position.z);
+        return playerPos;
     }
 
     [ContextMenu("Clear Grid")]

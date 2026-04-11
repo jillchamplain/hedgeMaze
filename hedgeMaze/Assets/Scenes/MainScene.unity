@@ -9067,7 +9067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3224461643358166844, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6482064170578812443, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: m_IsActive
@@ -9079,7 +9079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: type
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: hedge
@@ -9087,7 +9087,7 @@ PrefabInstance:
       objectReference: {fileID: 517075917}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.y
@@ -26701,7 +26701,7 @@ PrefabInstance:
       objectReference: {fileID: 1584294338}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8781120883239956591, guid: 6c8fe200cc21fbd4a85d679fd63045c0, type: 3}
       propertyPath: coords.y
@@ -38366,6 +38366,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5543440698887983221, guid: 5a677f6d2eb8fe0408cd2154c8868730, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1672228399}
     - target: {fileID: 6533425112777910768, guid: 5a677f6d2eb8fe0408cd2154c8868730, type: 3}
       propertyPath: m_Name
       value: GridManager

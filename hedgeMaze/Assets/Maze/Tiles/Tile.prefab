@@ -494,8 +494,8 @@ MonoBehaviour:
     direction: {x: -1, y: -1}
   - gameObject: {fileID: 219995178491202735}
     direction: {x: 1, y: -1}
-  hedge: {fileID: 6482064170578812443}
-  root: {fileID: 3224461643358166844}
+  hedgeModel: {fileID: 6482064170578812443}
+  rootModel: {fileID: 3224461643358166844}
 --- !u!1 &8352964289102950070
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +784,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6735738587472401390, guid: f9fef3b0d0c124d4882d1961b1fec90e, type: 3}
+      propertyPath: node
+      value: 
+      objectReference: {fileID: 8781120883239956591}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -38,9 +38,9 @@ public class Node : MonoBehaviour
         return nullSpawn;
     }
 
-    [Header("Type Models")]
-    [SerializeField] GameObject hedge;
-    [SerializeField] GameObject root;
+    [Header("Types")]
+    [SerializeField] GameObject hedgeModel;
+    [SerializeField] GameObject rootModel;
 
     GridManager gridManager;
     public Node(Vector2Int coords)
@@ -63,6 +63,16 @@ public class Node : MonoBehaviour
         ChangeTypeTo(type);
     }
 
+    public void EnterNode()
+    {
+
+    }
+
+    public void LeaveNode()
+    {
+        Grow();
+    }
+
     public void Cut()
     {
         if (type == ENodeType.HEDGE)
@@ -78,18 +88,18 @@ public class Node : MonoBehaviour
     {
         type = newType;
         //If not in Prefab Mode
-        hedge.SetActive(false);
-        root.SetActive(false);
+        hedgeModel.SetActive(false);
+        rootModel.SetActive(false);
 
         switch (type)
         {
             case ENodeType.NONE:
                 break;
             case ENodeType.HEDGE:
-                hedge.SetActive(true);
+                hedgeModel.SetActive(true);
                 break;
             case ENodeType.ROOT:
-                root.SetActive(true);
+                rootModel.SetActive(true);
                 break;
         }
     }
@@ -102,6 +112,14 @@ public class Node : MonoBehaviour
         if (PrefabStageUtility.GetCurrentPrefabStage() == null)
         {
             gameObject.name = $"Tile {coords.x}_{coords.y}";
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(type == ENodeType.ROOT)
+        {
+            Debug.Log("Root");
         }
     }
 }
