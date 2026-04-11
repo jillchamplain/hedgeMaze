@@ -5,15 +5,17 @@ public class CameraEffects : MonoBehaviour
 {
     [HideInInspector] public static CameraEffects instance;
     [Header("Camera Bob")]
-    [Range(.001f,.01f)]
+    [Range(.001f,.1f)]
     [SerializeField] float amount = .002f;
     [Range(1f, 30f)]
     [SerializeField] float frequency = 10f;
-    [Range(10f, 100f)]
-    [SerializeField] float smooth = 10f;
+    [Range(1f, 100f)]
+    [SerializeField] float returnSpeed = 4f;
+
 
     static Vector3 startPos = Vector3.zero;
-
+    Vector3 pos = Vector3.zero;
+    float time = 0;
     private void Awake()
     {
         if(instance == null)
@@ -28,21 +30,31 @@ public class CameraEffects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Camera.main.transform.localPosition = startPos + pos;
+        pos.y = Mathf.Sin(time) * amount;
     }
 
-    public void Bob()
+    public void Bob(float speed)
     {
-        Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Lerp(pos.y, Mathf.Sin(Time.time * frequency) * amount * 1.4f, smooth * Time.deltaTime);
-        pos.x += Mathf.Lerp(pos.x, Mathf.Cos(Time.time * frequency / 2f) * amount * 1.6f, smooth * Time.deltaTime);
-        Camera.main.transform.position += pos;
+        time += Time.deltaTime * speed * frequency;
+
+        if (time >= 2 * Mathf.PI) { time = 0; }
+
     }
 
     public void StopBob()
     {
-        if (Camera.main.transform.localPosition == startPos)
-            return;
-        Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, startPos, 1 * Time.deltaTime);
+        if (time > 3 * Mathf.PI / 2)
+        {
+            time = Mathf.Lerp(time, 2 * Mathf.PI, Time.deltaTime * returnSpeed);
+        }
+        else if (time > Mathf.PI / 2)
+        {
+            time = Mathf.Lerp(time, Mathf.PI, Time.deltaTime * returnSpeed);
+        }
+        else
+        {
+            time = Mathf.Lerp(time, 0, Time.deltaTime * returnSpeed);
+        }
     }
 }
