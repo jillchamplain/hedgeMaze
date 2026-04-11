@@ -5,12 +5,13 @@ public class CameraEffects : MonoBehaviour
 {
     [HideInInspector] public static CameraEffects instance;
     [Header("Camera Bob")]
-    [Range(.001f,.01f)]
+    [Range(.001f,.1f)]
     [SerializeField] float amount = .002f;
     [Range(1f, 30f)]
     [SerializeField] float frequency = 10f;
     [Range(10f, 100f)]
     [SerializeField] float smooth = 10f;
+
 
     static Vector3 startPos = Vector3.zero;
 
@@ -31,18 +32,15 @@ public class CameraEffects : MonoBehaviour
         
     }
 
-    public void Bob()
+    public void Bob(float speed)
     {
         Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Lerp(pos.y, Mathf.Sin(Time.time * frequency) * amount * 1.4f, smooth * Time.deltaTime);
-        pos.x += Mathf.Lerp(pos.x, Mathf.Cos(Time.time * frequency / 2f) * amount * 1.6f, smooth * Time.deltaTime);
-        Camera.main.transform.position += pos;
+        pos.y += Mathf.Sin(Time.time * frequency * speed) * amount;
+        Camera.main.transform.localPosition = startPos + pos;
     }
 
     public void StopBob()
     {
-        if (Camera.main.transform.localPosition == startPos)
-            return;
         Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, startPos, 1 * Time.deltaTime);
     }
 }
