@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [HideInInspector] public static GridManager instance;
     [SerializeField] public Vector2Int gridSize;
     [SerializeField] public int unityGridSize = 1;
     [SerializeField] Transform playerTransform;
@@ -17,8 +16,7 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        
     }
 
     private void Start()

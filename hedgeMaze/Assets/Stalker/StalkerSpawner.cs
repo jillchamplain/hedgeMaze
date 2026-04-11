@@ -1,22 +1,30 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
+using System.Collections;
 public class StalkerSpawner : MonoBehaviour
 {
+    GridManager gridManager;
+    [SerializeField] float initialSpawnTimer;
     [SerializeField] Vector2Int originPos;
     [SerializeField] GameObject stalkerPrefab;
 
     void Start()
     {
-        SpawnStalker();
+        gridManager = FindFirstObjectByType<GridManager>();
+        StartCoroutine(InitialSpawnTimer());
     }
 
     // Update is called once per frame
     void Update()
     {
-        originPos = GridManager.instance.GetPlayerGridPosition();
+        originPos = gridManager.GetPlayerGridPosition();
+    }
+
+    IEnumerator InitialSpawnTimer()
+    {
+        yield return new WaitForSeconds(initialSpawnTimer);
+        SpawnStalker();
     }
 
     void SpawnStalker()
@@ -131,10 +139,10 @@ public class StalkerSpawner : MonoBehaviour
     {
         List<Node> spawnNodes = new List<Node>();
         
-        Dictionary<Vector2Int, Node> grid = GridManager.instance.Grid;
+        Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
         //Iterate through dictionary keys in direction
-        for(int i = 1; i < GridManager.instance.gridSize.x; i++)
+        for(int i = 1; i < gridManager.gridSize.x; i++)
         {
             Node theNode;
 
@@ -143,7 +151,7 @@ public class StalkerSpawner : MonoBehaviour
             //Debug.Log(checkLocation);
 
             //If within bounds of Grid
-            if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < GridManager.instance.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < GridManager.instance.gridSize.y))
+            if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < gridManager.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < gridManager.gridSize.y))
             {
                 theNode = grid[checkLocation];
                 if (theNode.type == ENodeType.NONE)
@@ -180,7 +188,7 @@ public class StalkerSpawner : MonoBehaviour
             return false;
 
         Vector2Int oppositeDirection = new Vector2Int(-direction.x, -direction.y);
-        Dictionary<Vector2Int, Node> grid = GridManager.instance.Grid;
+        Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
         if (grid[node.coords + oppositeDirection].type == ENodeType.HEDGE)
         {

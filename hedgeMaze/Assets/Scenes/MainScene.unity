@@ -38484,14 +38484,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
-      propertyPath: stalkerPrefab
-      value: 
-      objectReference: {fileID: 4494737853800815011, guid: f09c964d7bab32b4ead3a9aaf6cb1930, type: 3}
-    - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 1672228399}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
