@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     float verticalInput;
     Vector3 moveDirection;
     bool isSprinting;
+    public bool GetSprinting() {  return isSprinting; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
