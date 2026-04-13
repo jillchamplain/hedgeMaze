@@ -49,9 +49,16 @@ public class WateringCan : Tool
 
     public override void Use(GameObject hitObject)
     {
-        if (hitObject.GetComponent<Flower>())
+        //Debug.Log(hitObject);
+        if (hitObject.GetComponentInParent<Flower>())
         {
             Water();
+            hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
+        }
+
+        else if(hitObject.GetComponentInParent<Fountain>())
+        {
+            Refill(hitObject.GetComponentInParent<Fountain>().refillAmount);
         }
     }
 

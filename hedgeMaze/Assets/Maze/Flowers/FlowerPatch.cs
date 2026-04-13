@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 public class FlowerPatch : MonoBehaviour
 {
-    List<Flower> flowers = new List<Flower>();
-
+    [SerializeField] List<Flower> flowers = new List<Flower>();
+    bool isPatchWatered = false;
     private void Awake()
     {
         ManageFlowers();
@@ -13,6 +13,19 @@ public class FlowerPatch : MonoBehaviour
     private void OnValidate()
     {
         
+    }
+
+
+    public void CheckIfWatered()
+    {
+        bool shouldBeWatered = true;
+
+        foreach(Flower flower in flowers)
+        {
+            if (flower.isWatered == false)
+                shouldBeWatered = false;
+        }
+        isPatchWatered = shouldBeWatered;
     }
 
     public void ManageFlowers()

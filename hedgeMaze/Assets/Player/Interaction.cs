@@ -35,7 +35,7 @@ public class Interaction : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionRange, interactionMask))
         {
             var selection = hit.transform;
-            Debug.Log($"Assigning to {selection.gameObject}");
+            //Debug.Log($"Assigning to {selection.gameObject}");
             if(selection.gameObject != null)
                 hitObject = selection.gameObject;
         }
