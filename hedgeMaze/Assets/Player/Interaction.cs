@@ -36,7 +36,8 @@ public class Interaction : MonoBehaviour
         {
             var selection = hit.transform;
             Debug.Log($"Assigning to {selection.gameObject}");
-            hitObject = selection.gameObject;
+            if(selection.gameObject != null)
+                hitObject = selection.gameObject;
         }
         return hitObject; 
     }

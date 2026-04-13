@@ -17,8 +17,7 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(Interaction.instance.CheckRaycast() != null)
-                UseCurrrentTool(Interaction.instance.CheckRaycast());
+            UseCurrrentTool(Interaction.instance.CheckRaycast());
         }
     }
     void UnEquipTool()
