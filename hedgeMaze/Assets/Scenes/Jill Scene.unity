@@ -13316,7 +13316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7350278284112439278, guid: 90d4437fe74225f4ea6f45c600fee19d, type: 3}
       propertyPath: refillAmount
-      value: 0.01
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
