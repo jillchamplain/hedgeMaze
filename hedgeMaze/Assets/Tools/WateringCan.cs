@@ -49,7 +49,7 @@ public class WateringCan : Tool
 
     public override void Use(GameObject hitObject)
     {
-        Debug.Log(hitObject);
+        //Debug.Log(hitObject);
         if (hitObject.GetComponent<Flower>())
         {
             Water();

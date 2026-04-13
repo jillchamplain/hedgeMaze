@@ -17,13 +17,18 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("Click");
             UseCurrrentTool(Interaction.instance.CheckRaycast());
         }
 
-        else if(Input.GetMouseButton(0))
+
+        else if (Input.GetMouseButton(0))
         {
             UseCurrrentTool(Interaction.instance.CheckRaycast());
+            Debug.Log("Hold Down");
         }
+
+        
     }
     void UnEquipTool()
     {
