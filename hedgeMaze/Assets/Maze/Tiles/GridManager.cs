@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
 
     public Vector2Int GetPlayerGridPosition()
     {
-        Vector2Int playerPos = new Vector2Int((int)playerTransform.position.x, (int)playerTransform.position.z);
+        Vector2Int playerPos = new Vector2Int(Mathf.RoundToInt(playerTransform.position.x), Mathf.RoundToInt(playerTransform.position.z));
         return playerPos;
     }
 
