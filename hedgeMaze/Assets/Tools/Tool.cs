@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class Tool : MonoBehaviour
 {
     [SerializeField] public string name;
+    [SerializeField] public GameObject model;
     public bool isEquipped = false;
 
     public abstract void Equip();

@@ -1,12 +1,15 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 public class Inventory : MonoBehaviour
 {
     [HideInInspector] public static Inventory instance;
     [SerializeField] List<Tool> tools = new List<Tool>();
-    [SerializeField] Tool curToolEquipped = null;
-    [SerializeField] int curToolIndex = -1;
+    [SerializeField] float toolChangeBufferTime;
+    bool canChangeTool = true;
+    Tool curToolEquipped = null;
+    int curToolIndex = -1;
 
     private void Start()
     {
@@ -15,6 +18,13 @@ public class Inventory : MonoBehaviour
     }
 
     private void Update()
+    {
+        UseTool();
+
+        ChangeTool();
+    }
+
+    void UseTool()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -28,33 +38,50 @@ public class Inventory : MonoBehaviour
             UseCurrrentTool(Interaction.instance.CheckRaycast());
             //Debug.Log("Hold Down");
         }
+    }
+
+    void ChangeTool()
+    {
+        if (!canChangeTool)
+            return;
 
         float scrollValue = Input.GetAxis("Mouse ScrollWheel");
 
         if (scrollValue > 0f)
         {
             if (scrollValue == -1)
+            {
                 EquipTool(tools.Count - 1);
+                StartCoroutine(ChangeToolTimer());
+            }
             else if (curToolIndex == tools.Count - 1)
             {
-                //Debug.Log("scrolled up on last tool");
                 EquipTool(0);
+                StartCoroutine(ChangeToolTimer());
             }
             else
+            {
                 EquipTool(curToolIndex + 1);
+                StartCoroutine(ChangeToolTimer());
+            }
         }
 
         else if (scrollValue < 0f)
         {
             if (scrollValue == -1)
+            {
                 EquipTool(0);
+            }
             else if (curToolIndex == 0)
             {
-                //Debug.Log("scrolled down on first tool");
                 EquipTool(tools.Count - 1);
+                StartCoroutine(ChangeToolTimer());
             }
             else
+            {
                 EquipTool(curToolIndex - 1);
+                StartCoroutine(ChangeToolTimer());
+            }
         }
     }
 
@@ -77,9 +104,13 @@ public class Inventory : MonoBehaviour
                 tools[i].isEquipped = true;
                 curToolEquipped = tools[i];
                 curToolIndex = i;
+                tools[i].model.SetActive(true);
             }
             else
+            {
                 tools[i].isEquipped = false;
+                tools[i].model.SetActive(false);
+            }
         }
     }
 
@@ -93,6 +124,12 @@ public class Inventory : MonoBehaviour
                 tools[i].isEquipped = true;
                 curToolEquipped = tools[i];
                 curToolIndex = i;
+                tools[i].model.SetActive(true);
+            }
+            else
+            {
+                tools[i].isEquipped = false;
+                tools[i].model.SetActive(false);
             }
         }
     }
@@ -101,5 +138,13 @@ public class Inventory : MonoBehaviour
     {
         if (curToolEquipped && hitObject != null)
             curToolEquipped.Use(hitObject);
+    }
+
+    IEnumerator ChangeToolTimer()
+    {
+        canChangeTool = false;
+        yield return new WaitForSeconds(toolChangeBufferTime);
+        canChangeTool = true;
+        
     }
 }

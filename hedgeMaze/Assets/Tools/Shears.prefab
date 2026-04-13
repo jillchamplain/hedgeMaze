@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Shears
+  model: {fileID: 2083340123360575365}
   isEquipped: 0
 --- !u!1 &2083340123360575365
 GameObject:
@@ -64,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &814428609823924392
 Transform:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9106073475330158898
 Transform:
   m_ObjectHideFlags: 0
