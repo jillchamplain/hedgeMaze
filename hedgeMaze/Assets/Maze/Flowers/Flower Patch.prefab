@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7578038060914094040}
   - component: {fileID: 6022138816899904294}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Flower Patch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,10 @@ PrefabInstance:
     - target: {fileID: 6379903174194228001, guid: ff442abeb939e6d40b3f6bd8fefde01b, type: 3}
       propertyPath: m_Name
       value: Flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379903174194228001, guid: ff442abeb939e6d40b3f6bd8fefde01b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9006119606206608168, guid: ff442abeb939e6d40b3f6bd8fefde01b, type: 3}
       propertyPath: m_LocalPosition.x

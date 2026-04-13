@@ -72,8 +72,7 @@ MonoBehaviour:
   tools:
   - {fileID: 4969222703403571785}
   - {fileID: 5412613750009093979}
-  curToolEquipped: {fileID: 0}
-  curToolIndex: -1
+  toolChangeBufferTime: 0.2
 --- !u!54 &8024335684107343850
 Rigidbody:
   m_ObjectHideFlags: 0
