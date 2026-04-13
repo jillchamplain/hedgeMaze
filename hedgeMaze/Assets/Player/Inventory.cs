@@ -8,8 +8,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<Tool> tools = new List<Tool>();
     [SerializeField] float toolChangeBufferTime;
     bool canChangeTool = true;
-    Tool curToolEquipped = null;
-    int curToolIndex = -1;
+    [SerializeField] Tool curToolEquipped;
+    int curToolIndex = 0;
 
     private void Start()
     {
