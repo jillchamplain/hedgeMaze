@@ -5,12 +5,20 @@ public class Inventory : MonoBehaviour
 {
     [HideInInspector] public static Inventory instance;
     [SerializeField] List<Tool> tools = new List<Tool>();
-    Tool curToolEquipped;
+    [SerializeField] Tool curToolEquipped;
 
     private void Start()
     {
         if(instance == null)
             instance = this;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            UseCurrrentTool(Interaction.instance.CheckRaycast());
+        }
     }
     void UnEquipTool()
     {
@@ -36,9 +44,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void UseCurrrentTool()
+    void UseCurrrentTool(GameObject hitObject)
     {
-        if (curToolEquipped)
-            curToolEquipped.Use();
+        if (curToolEquipped && hitObject != null)
+            curToolEquipped.Use(hitObject);
     }
 }

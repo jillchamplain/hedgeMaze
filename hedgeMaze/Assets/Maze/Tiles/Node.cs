@@ -79,7 +79,7 @@ public class Node : MonoBehaviour
         if (type == ENodeType.HEDGE)
         {
             ChangeTypeTo(ENodeType.NONE);
-            GameObject hedgeParticle = Instantiate(hedgeParticlePF, transform.position, Quaternion.identity);
+            GameObject hedgeParticle = Instantiate(hedgeParticlePF, new Vector3(hedgeModel.transform.position.x, hedgeModel.transform.position.y + 0.4f, hedgeModel.transform.position.z), Quaternion.identity);
             hedgeParticle.GetComponent<Particle>().Play();
         }
     }

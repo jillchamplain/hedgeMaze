@@ -9,5 +9,5 @@ public abstract class Tool : MonoBehaviour
 
     public abstract void UnEquip();
 
-    public abstract void Use();
+    public abstract void Use(GameObject hitObject);
 }

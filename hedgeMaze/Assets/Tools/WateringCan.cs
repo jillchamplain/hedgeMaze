@@ -47,9 +47,12 @@ public class WateringCan : Tool
 
     }
 
-    public override void Use()
+    public override void Use(GameObject hitObject)
     {
-
+        if (hitObject.GetComponent<Flower>())
+        {
+            Water();
+        }
     }
 
     public void Water()

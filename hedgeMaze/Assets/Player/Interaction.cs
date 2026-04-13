@@ -24,22 +24,22 @@ public class Interaction : MonoBehaviour
     void Update()
     {
         LookRaycast();
-        if (Input.GetMouseButtonDown(0))
-        {
-            CheckRaycast();
-        }
+        
     }
 
-    void CheckRaycast()
+    public GameObject CheckRaycast()
     {
+        GameObject hitObject = null;
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, interactionRange, interactionMask))
         {
             var selection = hit.transform;
-            Debug.Log(selection.parent.parent.parent.name);
+            Debug.Log($"Assigning to {selection.gameObject}");
+            if(selection.gameObject != null)
+                hitObject = selection.gameObject;
         }
-
+        return hitObject; 
     }
 
     void LookRaycast()
