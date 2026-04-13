@@ -134,9 +134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: WateringCan
   isEquipped: 0
+  playerMovement: {fileID: 0}
   curWaterAmount: 0
-  maxWaterAmount: 0
-  waterDepleteAmount: 0
+  maxWaterAmount: 100
+  waterDepleteAmount: 4
+  passiveWaterDepleteAmount: 2.5
+  sprintWaterDepleteAmount: 5
 --- !u!1 &6233062720752721705
 GameObject:
   m_ObjectHideFlags: 0
