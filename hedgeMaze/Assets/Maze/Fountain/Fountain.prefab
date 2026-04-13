@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1991464526548918222}
-  m_Layer: 0
+  - component: {fileID: 7350278284112439278}
+  m_Layer: 3
   m_Name: Fountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,6 +34,19 @@ Transform:
   - {fileID: 5022216323065975225}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7350278284112439278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919080477695410651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a16c7ad408419a4789389f3aa4d1554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refillAmount: 0.01
 --- !u!1 &6006547856106187000
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +58,7 @@ GameObject:
   - component: {fileID: 8552382297140595797}
   - component: {fileID: 858111347240367636}
   - component: {fileID: 4209369190535497926}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bowl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5022216323065975225}
   - component: {fileID: 1149330658765528490}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 6491990476299435296}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.058, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,8 +184,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.15
+  m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6924094513937918234
@@ -185,7 +199,7 @@ GameObject:
   - component: {fileID: 7449341981431842437}
   - component: {fileID: 1148877590637740553}
   - component: {fileID: 349899730159856515}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3830848852636877325}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
