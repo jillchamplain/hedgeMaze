@@ -43,6 +43,10 @@ public class Node : MonoBehaviour
     [SerializeField] GameObject hedgeParticlePF;
     [SerializeField] GameObject rootModel;
 
+    [Header("Gameplay")]
+    [SerializeField] float timeToCut = 8;
+    float cutTimer;
+
     GridManager gridManager;
     public Node(Vector2Int coords)
     {
@@ -78,9 +82,15 @@ public class Node : MonoBehaviour
     {
         if (type == ENodeType.HEDGE)
         {
+            cutTimer += Time.deltaTime;
+        }
+
+        if (cutTimer > timeToCut)
+        {
             ChangeTypeTo(ENodeType.NONE);
             GameObject hedgeParticle = Instantiate(hedgeParticlePF, new Vector3(hedgeModel.transform.position.x, hedgeModel.transform.position.y + 0.4f, hedgeModel.transform.position.z), Quaternion.identity);
             hedgeParticle.GetComponent<Particle>().Play();
+            cutTimer = 0;
         }
     }
 

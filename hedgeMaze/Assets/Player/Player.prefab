@@ -536,25 +536,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shears
       objectReference: {fileID: 0}
-    - target: {fileID: 177991113242815864, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2083340123360575365, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.16
+      value: 0.164
       objectReference: {fileID: 0}
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.22299999
+      value: -0.177
       objectReference: {fileID: 0}
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.054
       objectReference: {fileID: 0}
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalRotation.w
@@ -583,10 +575,6 @@ PrefabInstance:
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7235821642920787979, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
