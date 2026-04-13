@@ -8,6 +8,7 @@ public class WateringCan : Tool
     [SerializeField] float maxWaterAmount;
     public float GetMaxWaterAmount() { return maxWaterAmount; }
     [SerializeField] float waterDepleteAmount;
+    [SerializeField] float waterGivenAmount;
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
 
@@ -49,10 +50,11 @@ public class WateringCan : Tool
 
     public override void Use(GameObject hitObject)
     {
-        //Debug.Log(hitObject);
-        if (hitObject.GetComponentInParent<Flower>())
+        Debug.Log(hitObject);
+        if (hitObject.GetComponent<Flower>())
         {
             Water();
+            hitObject.GetComponent<Flower>().Water(waterGivenAmount);
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
         }
 

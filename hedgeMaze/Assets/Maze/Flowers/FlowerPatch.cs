@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 public class FlowerPatch : MonoBehaviour
 {
     [SerializeField] List<Flower> flowers = new List<Flower>();
-    bool isPatchWatered = false;
+    [SerializeField] bool isPatchWatered = false;
     private void Awake()
     {
         ManageFlowers();
