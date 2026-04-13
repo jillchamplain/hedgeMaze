@@ -54,7 +54,8 @@ public class WateringCan : Tool
         if (hitObject.GetComponent<Flower>())
         {
             Water();
-            hitObject.GetComponent<Flower>().Water(waterGivenAmount);
+            if(curWaterAmount > 0)
+                hitObject.GetComponent<Flower>().Water(waterGivenAmount);
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
         }
 
