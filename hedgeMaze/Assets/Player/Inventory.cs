@@ -5,7 +5,8 @@ public class Inventory : MonoBehaviour
 {
     [HideInInspector] public static Inventory instance;
     [SerializeField] List<Tool> tools = new List<Tool>();
-    [SerializeField] Tool curToolEquipped;
+    [SerializeField] Tool curToolEquipped = null;
+    [SerializeField] int curToolIndex = -1;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Click");
+            //Debug.Log("Click");
             UseCurrrentTool(Interaction.instance.CheckRaycast());
         }
 
@@ -25,11 +26,38 @@ public class Inventory : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             UseCurrrentTool(Interaction.instance.CheckRaycast());
-            Debug.Log("Hold Down");
+            //Debug.Log("Hold Down");
         }
 
-        
+        float scrollValue = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scrollValue > 0f)
+        {
+            if (scrollValue == -1)
+                EquipTool(tools.Count - 1);
+            else if (curToolIndex == tools.Count - 1)
+            {
+                //Debug.Log("scrolled up on last tool");
+                EquipTool(0);
+            }
+            else
+                EquipTool(curToolIndex + 1);
+        }
+
+        else if (scrollValue < 0f)
+        {
+            if (scrollValue == -1)
+                EquipTool(0);
+            else if (curToolIndex == 0)
+            {
+                //Debug.Log("scrolled down on first tool");
+                EquipTool(tools.Count - 1);
+            }
+            else
+                EquipTool(curToolIndex - 1);
+        }
     }
+
     void UnEquipTool()
     {
         foreach (Tool tool in tools)
@@ -37,19 +65,34 @@ public class Inventory : MonoBehaviour
             tool.isEquipped = false;
         }
         curToolEquipped = null;
+        curToolIndex = -1;
     }
-    void EquipTool(string nameOfTool)
+
+    void EquipTool(int index)
     {
-        foreach (Tool tool in tools)
+        for(int i =  0; i < tools.Count; i++)
         {
-            if (tool.name == nameOfTool)
+            if (i == index)
             {
-                tool.isEquipped = true;
-                curToolEquipped = tool;
+                tools[i].isEquipped = true;
+                curToolEquipped = tools[i];
+                curToolIndex = i;
             }
             else
+                tools[i].isEquipped = false;
+        }
+    }
+
+
+    void EquipTool(string nameOfTool)
+    {
+        for(int i = 0; i < tools.Count; i++)
+        {
+            if (tools[i].name == nameOfTool)
             {
-                tool.isEquipped = false;
+                tools[i].isEquipped = true;
+                curToolEquipped = tools[i];
+                curToolIndex = i;
             }
         }
     }
