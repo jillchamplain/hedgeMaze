@@ -31,6 +31,11 @@ public class Shears : Tool
         }
     }
 
+    public override void StopUse()
+    {
+        
+    }
+
     public void CutEffects()
     {
         targetNode.SpawnLeafParticle();

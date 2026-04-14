@@ -11,6 +11,7 @@ public class WateringCan : Tool
     [SerializeField] float waterGivenAmount;
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
+    [SerializeField] ParticleSystem waterParticleSystem;
 
     bool shouldSprintDeplete = false;
     void SetSprintDeplete(bool newSprintDeplete) {  shouldSprintDeplete = newSprintDeplete;}
@@ -45,12 +46,18 @@ public class WateringCan : Tool
 
     public override void UnEquip()
     {
+        waterParticleSystem.Stop();
+    }
 
+    public override void StopUse()
+    {
+        Debug.Log("Stopping particle system");
+        waterParticleSystem.Stop();
     }
 
     public override void Use(GameObject hitObject)
     {
-        Debug.Log(hitObject);
+        //Debug.Log(hitObject);
         if (hitObject.GetComponent<Flower>())
         {
             Water();
@@ -67,23 +74,40 @@ public class WateringCan : Tool
 
     public void Water()
     {
+        //Debug.Log($"water particle system {waterParticleSystem.isPlaying}");
+        if (curWaterAmount > 0)
+        {
+            Debug.Log("Playing particle system");
+            waterParticleSystem.Play();
+        }
+
         curWaterAmount -= waterDepleteAmount;
-        if(curWaterAmount < 0 )
+        if (curWaterAmount < 0)
+        {
+            waterParticleSystem.Stop();
             curWaterAmount = 0;
+        }
+
     }
 
     public void PassiveDepleteWater()
     {
         curWaterAmount -= passiveWaterDepleteAmount * Time.deltaTime;
-        if( curWaterAmount < 0 )
+        if (curWaterAmount < 0)
+        {
             curWaterAmount = 0;
+            waterParticleSystem.Stop();
+        }
     }
 
     public void SprintDepleteWater()
     {
         curWaterAmount -= sprintWaterDepleteAmount * Time.deltaTime;
-        if(curWaterAmount < 0 )
+        if (curWaterAmount < 0)
+        {
             curWaterAmount = 0;
+            waterParticleSystem.Stop();
+        }
     }
 
     public void Refill(float refillAmount)
