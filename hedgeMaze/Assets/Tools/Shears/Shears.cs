@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Shears : Tool
@@ -5,19 +6,17 @@ public class Shears : Tool
     [SerializeField] float timeToCut;
     [SerializeField] Animator animator;
     bool isCutting;
+    Node targetNode;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        animator.SetBool("isCutting", isCutting);
-    }
 
     private void LateUpdate()
     {
+        Debug.Log(isCutting);
+        animator.SetBool("isCutting", isCutting);
         isCutting = false;
     }
 
@@ -29,9 +28,15 @@ public class Shears : Tool
         if(hitObject != null && hitObject.GetComponentInParent<Node>())
         {
             isCutting = true;
-            Node theNode = hitObject.GetComponentInParent<Node>();
-            theNode.Cut();
+            targetNode = hitObject.GetComponentInParent<Node>();
         }
+    }
+
+    public void CutEffects()
+    {
+        targetNode.SpawnLeafParticle();
+        targetNode.transform.DOShakePosition(0.15f, 0.02f, 30);
+        targetNode.Cut();
     }
 
 }
