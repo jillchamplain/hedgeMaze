@@ -44,10 +44,14 @@ public class Node : MonoBehaviour
     [SerializeField] GameObject rootModel;
 
     [Header("Gameplay")]
-    [SerializeField] int cutsNeeded = 8;
-    int cutsRemaining;
+    [SerializeField] public int cutsNeeded = 8;
+    public int CutsRemaining { get; private set; }
 
     GridManager gridManager;
+
+    public delegate void CutEvent();
+    public CutEvent onCut;
+
     public Node(Vector2Int coords)
     {
         this.coords = coords;
@@ -56,7 +60,7 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
-        cutsRemaining = cutsNeeded;
+        CutsRemaining = cutsNeeded;
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
         UpdateCoords();
@@ -82,14 +86,16 @@ public class Node : MonoBehaviour
     {
         if (type == ENodeType.HEDGE)
         {
-            cutsRemaining--;
+            CutsRemaining--;
         }
 
-        if (cutsRemaining <= 0)
+        if (CutsRemaining <= 0)
         {
             ChangeTypeTo(ENodeType.NONE);
-            cutsRemaining = cutsNeeded;
+            CutsRemaining = cutsNeeded;
         }
+
+        onCut?.Invoke();
     }
 
     public void SpawnLeafParticle()

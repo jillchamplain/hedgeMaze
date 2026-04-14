@@ -15,7 +15,6 @@ public class Shears : Tool
 
     private void LateUpdate()
     {
-        Debug.Log(isCutting);
         animator.SetBool("isCutting", isCutting);
         isCutting = false;
     }
