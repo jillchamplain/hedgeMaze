@@ -38,6 +38,12 @@ public class StalkerSpawner : MonoBehaviour
 
         List<Node> spawnableTiles = GetSpawnableTiles();
 
+        if(spawnableTiles.Count <= 0)
+        {
+            Debug.Log("Nowhere for stalker to spawn!");
+            return;
+        }
+
         int randIndex = Random.Range(0, spawnableTiles.Count);
 
         Node spawnTile = spawnableTiles[randIndex];
