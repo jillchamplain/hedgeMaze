@@ -15,7 +15,7 @@ public class Shears : Tool
 
     private void LateUpdate()
     {
-        Debug.Log(isCutting);
+        //Debug.Log(isCutting);
         animator.SetBool("isCutting", isCutting);
         isCutting = false;
     }
@@ -30,6 +30,11 @@ public class Shears : Tool
             isCutting = true;
             targetNode = hitObject.GetComponentInParent<Node>();
         }
+    }
+
+    public override void StopUse()
+    {
+        
     }
 
     public void CutEffects()

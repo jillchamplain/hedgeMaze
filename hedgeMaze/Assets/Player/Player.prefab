@@ -73,6 +73,7 @@ MonoBehaviour:
   - {fileID: 4969222703403571785}
   - {fileID: 5412613750009093979}
   toolChangeBufferTime: 0.2
+  toolStopBufferTime: 0
   curToolEquipped: {fileID: 4969222703403571785}
 --- !u!54 &8024335684107343850
 Rigidbody:
@@ -541,6 +542,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 680cf89e0fcb5e64f820708338471ecc, type: 2}
+    - target: {fileID: 3490406113631942537, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4192288336275588735, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.164
@@ -581,6 +586,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4548516122169964452, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6912975737683332299, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: animator
       value: 
@@ -608,6 +617,10 @@ PrefabInstance:
     - target: {fileID: 7160432634961499743, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -0.00100708
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713970840773429389, guid: 05c755d73d3c9554aaa7973791cf4f89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -664,6 +677,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3722975273087960872}
     m_Modifications:
+    - target: {fileID: 1428363196340338828, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
+      propertyPath: lengthInSec
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2233537164712927289, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -731,6 +748,10 @@ PrefabInstance:
     - target: {fileID: 8050809122793006316, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
       propertyPath: waterGivenAmount
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050809122793006316, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
+      propertyPath: waterDepleteAmount
+      value: 0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

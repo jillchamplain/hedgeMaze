@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a16c7ad408419a4789389f3aa4d1554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refillAmount: 0.01
+  refillAmount: 0.08
 --- !u!1 &6006547856106187000
 GameObject:
   m_ObjectHideFlags: 0
