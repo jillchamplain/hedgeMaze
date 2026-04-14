@@ -93,6 +93,7 @@ public class Stalker : MonoBehaviour
             }
         }
         Debug.Log("Cannot find player");
+        Destroy(gameObject);
         return false;
     }
 }
