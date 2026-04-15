@@ -13,7 +13,7 @@ public class Stalker : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] float handSpeed;
     Transform player;
-
+    bool canMoveHand;
     [Header("Tilt")]
     [SerializeField] float rotationAmount;
     [SerializeField] float rotationDuration;
@@ -26,17 +26,8 @@ public class Stalker : MonoBehaviour
 
     IEnumerator Lean()
     {
-        // if direction value is negative, and opposite position value is negative, float is negative
-        // if direction value is negative, and opposite position value is positie, float is postive
-        // if direction value is positive, and opposite position value is negative, float is postive
-        // if direction value is positive, and opposite position value is positive, float is negative
-
-        Vector2 oppositePos = directionToPlayer.x == 0
-            ? new Vector2(spawnPosition.x, 0)
-            : new Vector2(0, spawnPosition.y);
-
-        float result = -Mathf.Sign(directionToPlayer.x + directionToPlayer.y) * Mathf.Sign(oppositePos.x + oppositePos.y);
-
+        yield return null;
+        float result = GetLeanResult(directionToPlayer, spawnPosition);
 
         float elapsed = 0;
         Vector3 endRotation = new Vector3(0,0, result * rotationAmount);
@@ -46,7 +37,17 @@ public class Stalker : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        visuals.transform.localEulerAngles = endRotation;
+        canMoveHand = true;
     }
+
+    float GetLeanResult(Vector2 direction, Vector2 spawnPos)
+    {
+        if (direction.x != 0) return Mathf.Sign(direction.x) * Mathf.Sign(spawnPos.y);
+        if (direction.y != 0) return -Mathf.Sign(direction.y) * Mathf.Sign(spawnPos.x);
+        return 0;
+    }
+
 
     public Vector2Int GetDirectionToPlayer() {  return directionToPlayer; }
     public void SetDirectionToPlayer(Vector2Int newDirection)
@@ -66,11 +67,11 @@ public class Stalker : MonoBehaviour
 
         if(directionToPlayer.y == -1)
         {
-            gameObject.transform.Rotate(new Vector3(0, -180, 0));
+            gameObject.transform.Rotate(new Vector3(0, 180, 0));
         }
         else if( directionToPlayer.y == 1)
         {
-            gameObject.transform.Rotate(new Vector3(0, 180, 0));
+            gameObject.transform.Rotate(new Vector3(0, 0, 0));
         }
     }
 
@@ -99,7 +100,7 @@ public class Stalker : MonoBehaviour
         gridManager = FindFirstObjectByType<GridManager>();
     }
 
-    // Update is called once per frame
+    // Update is called twice per frame
     void Update()
     {
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
@@ -109,6 +110,7 @@ public class Stalker : MonoBehaviour
 
     void MoveHand()
     {
+        if (!canMoveHand) { return; }
         hand.position = Vector3.MoveTowards(hand.position, player.position, handSpeed * Time.deltaTime);
     }
 
