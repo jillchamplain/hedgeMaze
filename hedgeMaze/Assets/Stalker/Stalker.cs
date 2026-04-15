@@ -1,6 +1,8 @@
 using NUnit.Framework;
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 public class Stalker : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
@@ -8,6 +10,44 @@ public class Stalker : MonoBehaviour
     [SerializeField] Vector2Int gridPosition;
     [SerializeField] Vector2Int spawnPosition;
     [SerializeField] Vector2Int gridPositionOffset;
+    [SerializeField] Transform hand;
+    [SerializeField] float handSpeed;
+    Transform player;
+
+    [Header("Tilt")]
+    [SerializeField] float rotationAmount;
+    [SerializeField] float rotationDuration;
+    [SerializeField] Transform visuals;
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        StartCoroutine(Lean());
+    }
+
+    IEnumerator Lean()
+    {
+        // if direction value is negative, and opposite position value is negative, float is negative
+        // if direction value is negative, and opposite position value is positie, float is postive
+        // if direction value is positive, and opposite position value is negative, float is postive
+        // if direction value is positive, and opposite position value is positive, float is negative
+
+        Vector2 oppositePos = directionToPlayer.x == 0
+            ? new Vector2(spawnPosition.x, 0)
+            : new Vector2(0, spawnPosition.y);
+
+        float result = -Mathf.Sign(directionToPlayer.x + directionToPlayer.y) * Mathf.Sign(oppositePos.x + oppositePos.y);
+
+
+        float elapsed = 0;
+        Vector3 endRotation = new Vector3(0,0, result * rotationAmount);
+        while (elapsed < rotationDuration)
+        {
+            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, elapsed/rotationDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     public Vector2Int GetDirectionToPlayer() {  return directionToPlayer; }
     public void SetDirectionToPlayer(Vector2Int newDirection)
     {
@@ -64,6 +104,12 @@ public class Stalker : MonoBehaviour
     {
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
         LookForPlayer();
+        MoveHand();
+    }
+
+    void MoveHand()
+    {
+        hand.position = Vector3.MoveTowards(hand.position, player.position, handSpeed * Time.deltaTime);
     }
 
     bool LookForPlayer()
