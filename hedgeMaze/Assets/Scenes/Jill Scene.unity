@@ -23896,10 +23896,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4997269696834947557, guid: df6c234644b8df147bef1e4cd20fdec4, type: 3}
-      propertyPath: waterRequirement
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6961668354260601232, guid: df6c234644b8df147bef1e4cd20fdec4, type: 3}
       propertyPath: m_Name
       value: Flower Patch
@@ -23910,7 +23906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7578038060914094040, guid: df6c234644b8df147bef1e4cd20fdec4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22500002
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 7578038060914094040, guid: df6c234644b8df147bef1e4cd20fdec4, type: 3}
       propertyPath: m_LocalPosition.z
