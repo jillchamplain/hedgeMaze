@@ -40,9 +40,18 @@ public class Node : MonoBehaviour
 
     [Header("Types")]
     [SerializeField] GameObject hedgeModel;
+    [SerializeField] GameObject hedgeParticlePF;
     [SerializeField] GameObject rootModel;
 
+    [Header("Gameplay")]
+    [SerializeField] public int cutsNeeded = 8;
+    public int CutsRemaining { get; private set; }
+
     GridManager gridManager;
+
+    public delegate void CutEvent();
+    public CutEvent onCut;
+
     public Node(Vector2Int coords)
     {
         this.coords = coords;
@@ -51,7 +60,7 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         gridManager = FindFirstObjectByType<GridManager>();
-
+        CutsRemaining = cutsNeeded;
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
         UpdateCoords();
@@ -76,13 +85,33 @@ public class Node : MonoBehaviour
     public void Cut()
     {
         if (type == ENodeType.HEDGE)
+        {
+            CutsRemaining--;
+        }
+
+        if (CutsRemaining <= 0)
+        {
             ChangeTypeTo(ENodeType.NONE);
+            NavMeshManager.instance.BakeNavmesh();
+            CutsRemaining = cutsNeeded;
+        }
+
+        onCut?.Invoke();
+    }
+
+    public void SpawnLeafParticle()
+    {
+        GameObject hedgeParticle = Instantiate(hedgeParticlePF, new Vector3(hedgeModel.transform.position.x, hedgeModel.transform.position.y + 0.4f, hedgeModel.transform.position.z), Quaternion.identity);
+        hedgeParticle.GetComponent<Particle>().Play();
     }
 
     public void Grow()
     {
-        if(type == ENodeType.ROOT)
+        if (type == ENodeType.ROOT)
+        {
             ChangeTypeTo(ENodeType.HEDGE);
+            NavMeshManager.instance.BakeNavmesh();
+        }
     }
     public void ChangeTypeTo(ENodeType newType)
     {

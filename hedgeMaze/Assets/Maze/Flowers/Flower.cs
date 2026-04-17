@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Flower : MonoBehaviour
 {
-    bool isWatered;
+    public bool isWatered;
     [SerializeField] float waterValue;
     [SerializeField] float waterRequirement;
     FlowerPatch flowerPatch;
@@ -19,8 +19,10 @@ public class Flower : MonoBehaviour
         flowerPatch.ManageFlowers();
     }
 
-    void Water()
+    public void Water(float waterAmount)
     {
-        
+        waterValue += waterAmount;
+        if (waterValue > waterRequirement)
+            isWatered = true;
     }
 }

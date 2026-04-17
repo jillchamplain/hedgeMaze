@@ -12,13 +12,18 @@ public class StalkerSpawner : MonoBehaviour
     void Start()
     {
         gridManager = FindFirstObjectByType<GridManager>();
-        StartCoroutine(InitialSpawnTimer());
+        //StartCoroutine(InitialSpawnTimer());
     }
 
     // Update is called once per frame
     void Update()
     {
         originPos = gridManager.GetPlayerGridPosition();
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            SpawnStalker();
+        }
     }
 
     IEnumerator InitialSpawnTimer()
@@ -32,6 +37,12 @@ public class StalkerSpawner : MonoBehaviour
         Debug.Log("Spawning Stalker...");
 
         List<Node> spawnableTiles = GetSpawnableTiles();
+
+        if(spawnableTiles.Count <= 0)
+        {
+            Debug.Log("Nowhere for stalker to spawn!");
+            return;
+        }
 
         int randIndex = Random.Range(0, spawnableTiles.Count);
 
@@ -67,7 +78,9 @@ public class StalkerSpawner : MonoBehaviour
         Debug.Log($"Spawn position to use is {newSpawnDirection}");*/
 
         GameObject theStalker = Instantiate(stalkerPrefab, spawnTile.GetSpawnPositionAt(newSpawnDirection).gameObject.transform.position, Quaternion.identity);
+        theStalker.GetComponent<Stalker>().SetSpawnPosition(spawnTile.GetSpawnPositionAt(newSpawnDirection).direction);
         theStalker.GetComponent<Stalker>().SetDirectionToPlayer(stalkerDirectionToPlayer);
+        theStalker.GetComponent<Stalker>().SetGridOffset();
     }
 
     Vector2Int GetDirectionOfSpawnableTile(Node theTile)
@@ -137,6 +150,7 @@ public class StalkerSpawner : MonoBehaviour
 
     List<Node> GetSpawnableTilesInDirection(Vector2Int direction)
     {
+        //Use node tree struct that grabs origin AND left right positions 
         List<Node> spawnNodes = new List<Node>();
         
         Dictionary<Vector2Int, Node> grid = gridManager.Grid;

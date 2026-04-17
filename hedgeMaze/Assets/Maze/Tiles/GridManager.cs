@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] public Vector2Int gridSize;
     [SerializeField] public int unityGridSize = 1;
     [SerializeField] Transform playerTransform;
-    [SerializeField] Vector2Int playerGridPosition;
+    [SerializeField] public Vector2Int playerGridPosition;
     [SerializeField] Vector2Int lastPlayerGridPosition;
     public int UnityGridSize { get { return unityGridSize; } }
 
@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
 
     public Vector2Int GetPlayerGridPosition()
     {
-        Vector2Int playerPos = new Vector2Int((int)playerTransform.position.x, (int)playerTransform.position.z);
+        Vector2Int playerPos = new Vector2Int(Mathf.RoundToInt(playerTransform.position.x), Mathf.RoundToInt(playerTransform.position.z));
         return playerPos;
     }
 
