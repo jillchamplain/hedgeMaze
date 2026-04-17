@@ -210,6 +210,7 @@ public class Stalker : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Stalker despawned");
+        //Debug.Log("Stalker despawned");
+
     }
 }
