@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 public class Stalker : MonoBehaviour
 {
@@ -13,11 +14,15 @@ public class Stalker : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] float handSpeed;
     Transform player;
-    bool canMoveHand;
+    bool isMoving;
     [Header("Tilt")]
     [SerializeField] float rotationAmount;
     [SerializeField] float rotationDuration;
+    [SerializeField] float rotateBackDuration;
     [SerializeField] Transform visuals;
+
+    [Header("Movement")]
+    [SerializeField] NavMeshAgent agent;
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -30,15 +35,25 @@ public class Stalker : MonoBehaviour
         float result = GetLeanResult(directionToPlayer, spawnPosition);
 
         float elapsed = 0;
-        Vector3 endRotation = new Vector3(0,0, result * rotationAmount);
+        Vector3 endRotation = new Vector3(0, 0, result * rotationAmount);
         while (elapsed < rotationDuration)
         {
-            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, elapsed/rotationDuration);
+            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, elapsed / rotationDuration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        visuals.transform.localEulerAngles = endRotation;
-        canMoveHand = true;
+
+        isMoving = true;
+
+        elapsed = 0;
+        while (elapsed < rotateBackDuration)
+        {
+            visuals.transform.localEulerAngles = Vector3.Lerp(endRotation, Vector3.zero, elapsed / rotateBackDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        visuals.transform.localEulerAngles = Vector3.zero;
     }
 
     float GetLeanResult(Vector2 direction, Vector2 spawnPos)
@@ -49,34 +64,34 @@ public class Stalker : MonoBehaviour
     }
 
 
-    public Vector2Int GetDirectionToPlayer() {  return directionToPlayer; }
+    public Vector2Int GetDirectionToPlayer() { return directionToPlayer; }
     public void SetDirectionToPlayer(Vector2Int newDirection)
     {
         directionToPlayer = newDirection;
 
         gameObject.transform.rotation = Quaternion.identity;
 
-        if(directionToPlayer.x == -1)
+        if (directionToPlayer.x == -1)
         {
             gameObject.transform.Rotate(new Vector3(0, -90, 0));
         }
-        else if(directionToPlayer.x == 1)
+        else if (directionToPlayer.x == 1)
         {
             gameObject.transform.Rotate(new Vector3(0, 90, 0));
         }
 
-        if(directionToPlayer.y == -1)
+        if (directionToPlayer.y == -1)
         {
             gameObject.transform.Rotate(new Vector3(0, 180, 0));
         }
-        else if( directionToPlayer.y == 1)
+        else if (directionToPlayer.y == 1)
         {
             gameObject.transform.Rotate(new Vector3(0, 0, 0));
         }
     }
 
     public void SetSpawnPosition(Vector2Int newSpawnPosition)
-    {  spawnPosition = newSpawnPosition;
+    { spawnPosition = newSpawnPosition;
     }
 
     public void SetGridOffset()
@@ -89,11 +104,11 @@ public class Stalker : MonoBehaviour
         {
             gridPositionOffset = new Vector2Int(0, spawnPosition.y);
         }
-        else if(directionToPlayer == Vector2Int.up || directionToPlayer == Vector2Int.down)
+        else if (directionToPlayer == Vector2Int.up || directionToPlayer == Vector2Int.down)
         {
             gridPositionOffset = new Vector2Int(spawnPosition.x, 0);
         }
-        
+
     }
     void Start()
     {
@@ -104,14 +119,15 @@ public class Stalker : MonoBehaviour
     void Update()
     {
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-        LookForPlayer();
-        MoveHand();
+        //LookForPlayer();
+        Move();
     }
 
-    void MoveHand()
+    void Move()
     {
-        if (!canMoveHand) { return; }
-        hand.position = Vector3.MoveTowards(hand.position, player.position, handSpeed * Time.deltaTime);
+        if (!isMoving) { return; }
+
+        agent.destination = player.position;
     }
 
     bool LookForPlayer()

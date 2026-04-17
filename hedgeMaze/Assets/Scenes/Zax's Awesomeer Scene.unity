@@ -14611,6 +14611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 858245776}
   - component: {fileID: 858245775}
+  - component: {fileID: 858245777}
   m_Layer: 0
   m_Name: NavMesh Surface
   m_TagString: Untagged
@@ -14637,7 +14638,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 136
   m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -14665,6 +14666,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &858245777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858245774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989971e606488241a5cd6207cfe90e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshSurfaceRef: {fileID: 858245775}
 --- !u!1001 &861346202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28461,15 +28475,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0.965
       objectReference: {fileID: 0}
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.57
+      value: 0.563
       objectReference: {fileID: 0}
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.978
       objectReference: {fileID: 0}
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalRotation.w
