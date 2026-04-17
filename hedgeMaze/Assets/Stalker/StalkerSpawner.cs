@@ -2,17 +2,27 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.VisualScripting;
 public class StalkerSpawner : MonoBehaviour
 {
     GridManager gridManager;
-    [SerializeField] float initialSpawnTimer;
+
+    [SerializeField] List<Vector2> spawnIntervalsPerFlowersWatered = new List<Vector2>();
+    [SerializeField] Vector2 queueSpawnInterval;
+    bool shouldQueueStalker = false;
+    bool firstStalkerSpawn = true;
+
+    [Header("References")]
     [SerializeField] Vector2Int originPos;
     [SerializeField] GameObject stalkerPrefab;
+    Stalker stalker;
 
     void Start()
     {
         gridManager = FindFirstObjectByType<GridManager>();
         //StartCoroutine(InitialSpawnTimer());
+        StartCoroutine(SpawnTimer(0));
+
     }
 
     // Update is called once per frame
@@ -24,22 +34,37 @@ public class StalkerSpawner : MonoBehaviour
         {
             SpawnStalker();
         }
+
+        if (stalker == null && !firstStalkerSpawn && !shouldQueueStalker)
+        {
+            Debug.Log("Queue timer started");
+            shouldQueueStalker = true;
+            StartCoroutine(QueueSpawnTimer());
+        }
     }
 
-    IEnumerator InitialSpawnTimer()
+    void ShouldSpawnTimer(int numFlowersWatered)
     {
-        yield return new WaitForSeconds(initialSpawnTimer);
-        SpawnStalker();
+        if (shouldQueueStalker)
+        {
+            Debug.Log("Will queue spawn");
+            StartCoroutine(QueueSpawnTimer());
+        }
+        else
+        {
+            Debug.Log("Will spawn");
+            StartCoroutine(SpawnTimer(numFlowersWatered));
+        }
     }
 
     void SpawnStalker()
     {
-
+        Debug.Log("Spawning stalker...");
         List<Node> spawnableTiles = GetSpawnableTiles();
         
         foreach(Node tile in spawnableTiles)
         {
-            Debug.Log(tile);
+            //Debug.Log(tile);
         }
 
 
@@ -88,6 +113,8 @@ public class StalkerSpawner : MonoBehaviour
         theStalker.GetComponent<Stalker>().SetSpawnPosition(spawnTile.GetSpawnPositionAt(newSpawnDirection).direction);
         theStalker.GetComponent<Stalker>().SetDirectionToPlayer(stalkerDirectionToPlayer);
         theStalker.GetComponent<Stalker>().SetGridOffset();
+
+        stalker = theStalker.GetComponent<Stalker>();
     }
 
     Vector2Int GetDirectionOfSpawnableTile(Node theTile)
@@ -170,7 +197,7 @@ public class StalkerSpawner : MonoBehaviour
         if (direction.y != 0)
             yStartOffset = direction.y;*/
 
-        Debug.Log($"{xStartOffset}:{yStartOffset}");
+        //Debug.Log($"{xStartOffset}:{yStartOffset}");
 
         //Iterate through dictionary keys in direction
         for (int i = 1; i < gridManager.gridSize.x; i++)
@@ -179,7 +206,7 @@ public class StalkerSpawner : MonoBehaviour
             
             Vector2Int checkLocationOffset = new Vector2Int(direction.x * i + xStartOffset, direction.y * i + yStartOffset);
             Vector2Int checkLocation = originPos + checkLocationOffset;
-            Debug.Log(checkLocation);
+            //Debug.Log(checkLocation);
 
             //If within bounds of Grid
             if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < gridManager.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < gridManager.gridSize.y))
@@ -242,5 +269,34 @@ public class StalkerSpawner : MonoBehaviour
         }
 
         return canSpawn;
+    }
+
+    IEnumerator SpawnTimer(int numFlowersWatered)
+    {
+        if (numFlowersWatered < 0 || numFlowersWatered > spawnIntervalsPerFlowersWatered.Count)
+            yield return null;
+
+        float randTime = Random.Range(spawnIntervalsPerFlowersWatered[numFlowersWatered].x, spawnIntervalsPerFlowersWatered[numFlowersWatered].y);
+
+        Debug.Log($"Will spawn in {randTime} seconds");
+        yield return new WaitForSeconds(randTime);
+
+        if (!stalker && !shouldQueueStalker) //If no stalker active && not queued already
+        {
+            Debug.Log("Regular spawn");
+            firstStalkerSpawn = false;
+            SpawnStalker();
+            StartCoroutine(SpawnTimer(numFlowersWatered));
+        }
+    }
+
+    IEnumerator QueueSpawnTimer()
+    {
+        float randTime = Random.Range(queueSpawnInterval.x, queueSpawnInterval.y);
+
+        yield return new WaitForSeconds(randTime);
+        shouldQueueStalker = false;
+        SpawnStalker();
+        StartCoroutine(SpawnTimer(0));
     }
 }
