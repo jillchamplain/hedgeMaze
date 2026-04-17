@@ -5,11 +5,10 @@ public class GameManager : MonoBehaviour
 {
     [HideInInspector] public static GameManager instance;
     [SerializeField] public int flowersWatered = 0;
-    [SerializeField] int flowersToWater;
+    [SerializeField] public int totalFlowers;
     public void WaterFlower()
     {
         flowersWatered++;
-        flowersToWater--;
     }
     public bool hasLost;
 
@@ -29,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(flowersToWater <= 0)
+        if(flowersWatered >= totalFlowers)
         {
             Debug.Log("You win!");
             SceneManager.LoadScene(0);

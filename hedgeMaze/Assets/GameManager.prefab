@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flowersWatered: 0
-  flowersToWater: 0
+  totalFlowers: 4
   hasLost: 0
