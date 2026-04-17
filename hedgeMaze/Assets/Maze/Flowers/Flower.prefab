@@ -50,6 +50,8 @@ MonoBehaviour:
   isWatered: 0
   waterValue: 0
   waterRequirement: 0
+  meshRenderer: {fileID: 6830034132165742476}
+  waterMaterial: {fileID: 2100000, guid: 86a4e8eaf2919f44581b1ea04b1cebe8, type: 2}
 --- !u!33 &5202628441068061201
 MeshFilter:
   m_ObjectHideFlags: 0

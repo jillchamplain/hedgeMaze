@@ -11,6 +11,7 @@ public class StalkerSpawner : MonoBehaviour
     [SerializeField] Vector2 queueSpawnInterval;
     bool shouldQueueStalker = false;
     bool firstStalkerSpawn = true;
+    bool wateredFlower = false;
 
     [Header("References")]
     [SerializeField] Vector2Int originPos;
@@ -21,7 +22,6 @@ public class StalkerSpawner : MonoBehaviour
     {
         gridManager = FindFirstObjectByType<GridManager>();
         //StartCoroutine(InitialSpawnTimer());
-        StartCoroutine(SpawnTimer(0));
 
     }
 
@@ -35,7 +35,13 @@ public class StalkerSpawner : MonoBehaviour
             SpawnStalker();
         }
 
-        if (stalker == null && !firstStalkerSpawn && !shouldQueueStalker)
+        if(firstStalkerSpawn && !wateredFlower && GameManager.instance.flowersWatered != 0)
+        {
+            wateredFlower = true;
+            StartCoroutine(SpawnTimer(GameManager.instance.flowersWatered - 1));
+        }
+
+        if (!firstStalkerSpawn && stalker == null && shouldQueueStalker)
         {
             Debug.Log("Queue timer started");
             shouldQueueStalker = true;
@@ -283,10 +289,10 @@ public class StalkerSpawner : MonoBehaviour
 
         if (!stalker && !shouldQueueStalker) //If no stalker active && not queued already
         {
-            Debug.Log("Regular spawn");
             firstStalkerSpawn = false;
+            Debug.Log("Regular spawn");
             SpawnStalker();
-            StartCoroutine(SpawnTimer(numFlowersWatered));
+            StartCoroutine(SpawnTimer(GameManager.instance.flowersWatered - 1));
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public static GameManager instance;
-    [SerializeField] int flowersWatered = 0;
+    [SerializeField] public int flowersWatered = 0;
     [SerializeField] int flowersToWater;
     public void WaterFlower()
     {

@@ -6,6 +6,7 @@ public class FlowerPatch : MonoBehaviour
 {
     [SerializeField] List<Flower> flowers = new List<Flower>();
     [SerializeField] bool isPatchWatered = false;
+    bool hasIncremented;
     private void Awake()
     {
         ManageFlowers();
@@ -26,8 +27,11 @@ public class FlowerPatch : MonoBehaviour
                 shouldBeWatered = false;
         }
         isPatchWatered = shouldBeWatered;
-        if(isPatchWatered)
+        if(isPatchWatered && !hasIncremented)
+        {
             GameManager.instance.WaterFlower();
+            hasIncremented = true;
+        }
     }
 
     public void ManageFlowers()

@@ -6,6 +6,9 @@ public class Flower : MonoBehaviour
     public bool isWatered;
     [SerializeField] float waterValue;
     [SerializeField] float waterRequirement;
+    [Header("References")]
+    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] Material waterMaterial;
     FlowerPatch flowerPatch;
 
     private void Awake()
@@ -23,6 +26,9 @@ public class Flower : MonoBehaviour
     {
         waterValue += waterAmount;
         if (waterValue > waterRequirement)
+        {
             isWatered = true;
+            meshRenderer.material = waterMaterial;
+        }
     }
 }

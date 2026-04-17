@@ -56,8 +56,8 @@ MonoBehaviour:
   maxWaterAmount: 100
   waterDepleteAmount: 4
   waterGivenAmount: 0
-  passiveWaterDepleteAmount: 2.5
-  sprintWaterDepleteAmount: 5
+  passiveWaterDepleteAmount: 1.8
+  sprintWaterDepleteAmount: 4.2
   waterParticleSystem: {fileID: 1428363196340338828}
 --- !u!95 &4062378430270276528
 Animator:
