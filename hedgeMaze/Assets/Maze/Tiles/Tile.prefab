@@ -497,7 +497,7 @@ MonoBehaviour:
   hedgeModel: {fileID: 6482064170578812443}
   hedgeParticlePF: {fileID: 3132278949893842507, guid: 91116b94c71b2364da2f9eba3c58497f, type: 3}
   rootModel: {fileID: 3224461643358166844}
-  cutsNeeded: 12
+  cutsNeeded: 8
 --- !u!1 &8352964289102950070
 GameObject:
   m_ObjectHideFlags: 0

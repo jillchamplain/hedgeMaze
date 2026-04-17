@@ -23,6 +23,17 @@ public class Stalker : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] NavMeshAgent agent;
+
+    [Header("Despawning")]
+    [Tooltip("This is the maximum and starting attention")]
+    [SerializeField] float maxAttention;
+    [Tooltip("When seeing the player, this is the amount attention drops per second")]
+    [SerializeField] float attentionGrowth;
+    [Tooltip("When not seeing the player, this is the amount attention drops per second")]
+    [SerializeField] float attentionLoss;
+    [SerializeField] LayerMask sightLayers;
+    float attention;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -36,9 +47,9 @@ public class Stalker : MonoBehaviour
 
         float elapsed = 0;
         Vector3 endRotation = new Vector3(0, 0, result * rotationAmount);
-        while (elapsed < rotationDuration)
+        while (attention < maxAttention)
         {
-            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, elapsed / rotationDuration);
+            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, attention / maxAttention);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -119,31 +130,39 @@ public class Stalker : MonoBehaviour
     void Update()
     {
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-        //LookForPlayer();
-        Move();
+
+        if (isMoving)
+        {
+            ManageAttention();
+            Move();
+        }
+        else
+        {
+            ManageSightWhenLeaning();
+        }
+        attention = Mathf.Clamp(attention, 0, maxAttention);
     }
 
     void Move()
     {
-        if (!isMoving) { return; }
-
-        agent.destination = player.position;
+        if (isMoving)
+            agent.destination = player.position;
     }
 
-    bool LookForPlayer()
+    void ManageSightWhenLeaning()
     {
         //Look in opposite direction down grid and check if player position equals any of them
 
         List<Node> lookNodes = new List<Node>();
         Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
-        for(int i = 0; i < gridManager.gridSize.x; i++)
+        for (int i = 0; i < gridManager.gridSize.x; i++)
         {
-            Node theNode; 
+            Node theNode;
 
             Vector2Int lookLocationOffset = new Vector2Int(directionToPlayer.x * i, directionToPlayer.y * i);
             Vector2Int lookLocation = gridPosition + lookLocationOffset + gridPositionOffset;
-            ;
+            
 
             //If within bounds of grid
             if ((lookLocation.x - 1 >= 0 && lookLocation.x + 1 < gridManager.gridSize.x) && (lookLocation.y - 1 >= 0 && lookLocation.y + 1 < gridManager.gridSize.y))
@@ -151,13 +170,40 @@ public class Stalker : MonoBehaviour
                 theNode = grid[lookLocation];
                 if (theNode.coords == gridManager.GetPlayerGridPosition())
                 {
-                    Debug.Log($"Can see player at {theNode.coords}");
-                    return true;
+                    attention += Time.deltaTime * attentionGrowth;
+                    return;
                 }
             }
         }
-        Debug.Log("Cannot find player");
-        Destroy(gameObject);
-        return false;
+        attention -= Time.deltaTime * attentionLoss;
+
+        if (attention <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void ManageAttention()
+    {
+        RaycastHit hit;
+        Vector3 lookDirection = (player.position - transform.position).normalized;
+
+        if (Physics.Raycast(transform.position, lookDirection, out hit, Mathf.Infinity, sightLayers))
+        {
+            if (hit.transform.gameObject.CompareTag("Player"))
+            {
+                attention += Time.deltaTime * attentionGrowth;
+            }
+            else
+            {
+                attention -= Time.deltaTime * attentionLoss;
+            }
+        }
+
+        if (attention <= 0)
+        {
+            isMoving = false;
+            Destroy(gameObject);
+        }
     }
 }
