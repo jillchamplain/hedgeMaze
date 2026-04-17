@@ -3,6 +3,7 @@ using UnityEngine;
 public class WateringCan : Tool
 {
     [SerializeField] Movement playerMovement;
+    [SerializeField] Animator animator;
     [SerializeField] float curWaterAmount;
     public float GetWaterAmount() {  return curWaterAmount; }
     [SerializeField] float maxWaterAmount;
@@ -12,7 +13,7 @@ public class WateringCan : Tool
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
     [SerializeField] ParticleSystem waterParticleSystem;
-
+    bool isWatering = false;
     bool shouldSprintDeplete = false;
     void SetSprintDeplete(bool newSprintDeplete) {  shouldSprintDeplete = newSprintDeplete;}
 
@@ -25,6 +26,11 @@ public class WateringCan : Tool
     void Update()
     {
         
+    }
+
+    private void LateUpdate()
+    {
+        animator.SetBool("isWatering", isWatering);
     }
 
     private void FixedUpdate()
@@ -46,12 +52,14 @@ public class WateringCan : Tool
 
     public override void UnEquip()
     {
+        isWatering = false;
         waterParticleSystem.Stop();
     }
 
     public override void StopUse()
     {
-        Debug.Log("Stopping particle system");
+        //Debug.Log("Stopping particle system");
+        isWatering = false;
         waterParticleSystem.Stop();
     }
 
@@ -60,6 +68,7 @@ public class WateringCan : Tool
         //Debug.Log(hitObject);
         if (hitObject.GetComponent<Flower>())
         {
+            isWatering = true;
             Water();
             if(curWaterAmount > 0)
                 hitObject.GetComponent<Flower>().Water(waterGivenAmount);

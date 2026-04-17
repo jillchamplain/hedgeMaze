@@ -148,6 +148,8 @@ public class Inventory : MonoBehaviour
     {
         if (curToolEquipped && hitObject != null)
             curToolEquipped.Use(hitObject);
+        else if (hitObject == null)
+            curToolEquipped.StopUse();
     }
 
     IEnumerator ChangeToolTimer()
