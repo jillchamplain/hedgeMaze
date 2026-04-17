@@ -26,6 +26,8 @@ public class FlowerPatch : MonoBehaviour
                 shouldBeWatered = false;
         }
         isPatchWatered = shouldBeWatered;
+        if(isPatchWatered)
+            GameManager.instance.WaterFlower();
     }
 
     public void ManageFlowers()
