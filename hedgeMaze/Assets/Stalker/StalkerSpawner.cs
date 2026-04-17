@@ -34,9 +34,14 @@ public class StalkerSpawner : MonoBehaviour
 
     void SpawnStalker()
     {
-        Debug.Log("Spawning Stalker...");
 
         List<Node> spawnableTiles = GetSpawnableTiles();
+        
+        foreach(Node tile in spawnableTiles)
+        {
+            Debug.Log(tile);
+        }
+
 
         if(spawnableTiles.Count <= 0)
         {
@@ -51,6 +56,8 @@ public class StalkerSpawner : MonoBehaviour
 
         Vector2Int newSpawnDirection = new Vector2Int(-spawnDirection.x, -spawnDirection.y); //Reverse direction of search direction
         Vector2Int stalkerDirectionToPlayer = newSpawnDirection;
+
+        Debug.Log($"Spawning stalker at {spawnTile.coords}");
 
         int leftRightPos = 0;
 
@@ -150,19 +157,29 @@ public class StalkerSpawner : MonoBehaviour
 
     List<Node> GetSpawnableTilesInDirection(Vector2Int direction)
     {
-        //Use node tree struct that grabs origin AND left right positions 
+        
         List<Node> spawnNodes = new List<Node>();
         
         Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
+        int xStartOffset = 0;
+        int yStartOffset = 0;
+
+        /*if (direction.x != 0)
+            xStartOffset = direction.x;
+        if (direction.y != 0)
+            yStartOffset = direction.y;*/
+
+        Debug.Log($"{xStartOffset}:{yStartOffset}");
+
         //Iterate through dictionary keys in direction
-        for(int i = 1; i < gridManager.gridSize.x; i++)
+        for (int i = 1; i < gridManager.gridSize.x; i++)
         {
             Node theNode;
-
-            Vector2Int checkLocationOffset = new Vector2Int(direction.x * i, direction.y * i);
+            
+            Vector2Int checkLocationOffset = new Vector2Int(direction.x * i + xStartOffset, direction.y * i + yStartOffset);
             Vector2Int checkLocation = originPos + checkLocationOffset;
-            //Debug.Log(checkLocation);
+            Debug.Log(checkLocation);
 
             //If within bounds of Grid
             if ((checkLocation.x - 1 >= 0 && checkLocation.x + 1 < gridManager.gridSize.x) && (checkLocation.y - 1 >= 0 && checkLocation.y + 1 < gridManager.gridSize.y))
@@ -181,13 +198,27 @@ public class StalkerSpawner : MonoBehaviour
                     Node leftNode = grid[checkLocation + leftOffset];
                     Node rightNode = grid[checkLocation + rightOffset];
 
+                    if (i == 1)
+                        continue;
                     if (CheckNodeForSpawn(leftNode, direction))
+                    {
                         spawnNodes.Add(leftNode);
-                    if(CheckNodeForSpawn(rightNode, direction))
+                    }
+                    if (CheckNodeForSpawn(rightNode, direction))
+                    {
                         spawnNodes.Add(rightNode);
+                    }
                 }
                 else if (theNode.type == ENodeType.HEDGE)
+                {
+                    //Debug.Log("Breaking for hedge");
                     break;
+                }
+            }
+            else
+            {
+                //Debug.Log("Breaking for end of grid");
+                break;
             }
         }
 

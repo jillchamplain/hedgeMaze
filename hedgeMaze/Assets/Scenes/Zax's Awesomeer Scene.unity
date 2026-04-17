@@ -21616,7 +21616,7 @@ GameObject:
   - component: {fileID: 1248113874}
   m_Layer: 0
   m_Name: Post Processing Global Volume
-  m_TagString: Untagged
+  m_TagString: Volume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30254,6 +30254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowersWatered: 0
   flowersToWater: 0
+  hasLost: 0
 --- !u!4 &1785870861
 Transform:
   m_ObjectHideFlags: 0

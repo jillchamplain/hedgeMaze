@@ -1,8 +1,12 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 public class Stalker : MonoBehaviour
 {
@@ -23,6 +27,7 @@ public class Stalker : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] NavMeshAgent agent;
+    Volume postProccessingVolume;
 
     [Header("Despawning")]
     [Tooltip("This is the maximum and starting attention")]
@@ -129,12 +134,18 @@ public class Stalker : MonoBehaviour
     // Update is called twice per frame
     void Update()
     {
+        if (GameManager.instance.hasLost)
+        {
+            return;
+        }
+
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
         if (isMoving)
         {
             ManageAttention();
             Move();
+            KillPlayer();
         }
         else
         {
@@ -205,5 +216,68 @@ public class Stalker : MonoBehaviour
             isMoving = false;
             Destroy(gameObject);
         }
+    }
+
+
+    void KillPlayer()
+    {
+        if (Vector3.Distance(transform.position, player.position) < 1 && !GameManager.instance.hasLost)
+        {
+            GameManager.instance.PlayerDeath();
+            isMoving = false;
+            agent.isStopped = true;
+            StartCoroutine(PlayerDeathAnimation());
+        }
+    }
+
+    IEnumerator MakeRed()
+    {
+        postProccessingVolume = GameObject.FindGameObjectWithTag("Volume").GetComponent<Volume>();
+        postProccessingVolume.profile.TryGet<ColorAdjustments>(out var colorAdjustments);
+        float elapsed = 0;
+        while (elapsed < 0.8f)
+        {
+            colorAdjustments.colorFilter.value = Color.Lerp(Color.white, Color.red, elapsed / 0.8f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        colorAdjustments.colorFilter.value = Color.red;
+
+    }
+
+    IEnumerator PlayerDeathAnimation()
+    {        
+        Transform camera = Camera.main.transform;
+
+        Vector3 endPosition = transform.position + transform.forward * 0.5f + new Vector3(0, 0.8f, 0);
+        Vector3 lookTarget = transform.position + new Vector3(0, 0.8f, 0);
+
+        // Direction as if camera is already at endPosition
+        Vector3 directionFromEnd = lookTarget - endPosition;
+
+        Tween raiseTween = camera.DOMove(endPosition, 0.3f);
+        Tween twistTween = camera.DOLocalRotate(
+            Quaternion.LookRotation(directionFromEnd).eulerAngles,
+            0.3f
+        );
+
+
+        yield return twistTween.WaitForCompletion();
+        yield return raiseTween.WaitForCompletion();
+
+        transform.DOLookAt(camera.position, 0.1f, AxisConstraint.Y);
+
+        StartCoroutine(MakeRed());
+
+        Tween shakeTween = camera.DOShakePosition(0.8f, new Vector3(0, 0.01f, 0), 28, 90, false, false);
+        yield return shakeTween.WaitForCompletion();
+        camera.DOLocalRotate(new Vector3(0, 180, 40) + camera.eulerAngles, 0.2f).SetEase(Ease.OutQuad);
+        yield return new WaitForSeconds(0.2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Stalker despawned");
     }
 }

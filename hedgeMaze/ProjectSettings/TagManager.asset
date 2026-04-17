@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Hedge
+  - Volume
   layers:
   - Default
   - TransparentFX
