@@ -206,4 +206,10 @@ public class Stalker : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
+    private void OnDestroy()
+    {
+        Debug.Log("Stalker despawned");
+    }
 }
