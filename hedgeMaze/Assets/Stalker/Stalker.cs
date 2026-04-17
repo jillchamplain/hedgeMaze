@@ -1,6 +1,9 @@
 using NUnit.Framework;
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 public class Stalker : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
@@ -8,34 +11,98 @@ public class Stalker : MonoBehaviour
     [SerializeField] Vector2Int gridPosition;
     [SerializeField] Vector2Int spawnPosition;
     [SerializeField] Vector2Int gridPositionOffset;
-    public Vector2Int GetDirectionToPlayer() {  return directionToPlayer; }
+    [SerializeField] Transform hand;
+    [SerializeField] float handSpeed;
+    Transform player;
+    bool isMoving;
+    [Header("Tilt")]
+    [SerializeField] float rotationAmount;
+    [SerializeField] float rotationDuration;
+    [SerializeField] float rotateBackDuration;
+    [SerializeField] Transform visuals;
+
+    [Header("Movement")]
+    [SerializeField] NavMeshAgent agent;
+
+    [Header("Despawning")]
+    [Tooltip("This is the maximum and starting attention")]
+    [SerializeField] float maxAttention;
+    [Tooltip("When seeing the player, this is the amount attention drops per second")]
+    [SerializeField] float attentionGrowth;
+    [Tooltip("When not seeing the player, this is the amount attention drops per second")]
+    [SerializeField] float attentionLoss;
+    [SerializeField] LayerMask sightLayers;
+    float attention;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        StartCoroutine(Lean());
+    }
+
+    IEnumerator Lean()
+    {
+        yield return null;
+        float result = GetLeanResult(directionToPlayer, spawnPosition);
+
+        float elapsed = 0;
+        Vector3 endRotation = new Vector3(0, 0, result * rotationAmount);
+        while (attention < maxAttention)
+        {
+            visuals.transform.localEulerAngles = Vector3.Lerp(Vector3.zero, endRotation, attention / maxAttention);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        isMoving = true;
+
+        elapsed = 0;
+        while (elapsed < rotateBackDuration)
+        {
+            visuals.transform.localEulerAngles = Vector3.Lerp(endRotation, Vector3.zero, elapsed / rotateBackDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        visuals.transform.localEulerAngles = Vector3.zero;
+    }
+
+    float GetLeanResult(Vector2 direction, Vector2 spawnPos)
+    {
+        if (direction.x != 0) return Mathf.Sign(direction.x) * Mathf.Sign(spawnPos.y);
+        if (direction.y != 0) return -Mathf.Sign(direction.y) * Mathf.Sign(spawnPos.x);
+        return 0;
+    }
+
+
+    public Vector2Int GetDirectionToPlayer() { return directionToPlayer; }
     public void SetDirectionToPlayer(Vector2Int newDirection)
     {
         directionToPlayer = newDirection;
 
         gameObject.transform.rotation = Quaternion.identity;
 
-        if(directionToPlayer.x == -1)
+        if (directionToPlayer.x == -1)
         {
             gameObject.transform.Rotate(new Vector3(0, -90, 0));
         }
-        else if(directionToPlayer.x == 1)
+        else if (directionToPlayer.x == 1)
         {
             gameObject.transform.Rotate(new Vector3(0, 90, 0));
         }
 
-        if(directionToPlayer.y == -1)
-        {
-            gameObject.transform.Rotate(new Vector3(0, -180, 0));
-        }
-        else if( directionToPlayer.y == 1)
+        if (directionToPlayer.y == -1)
         {
             gameObject.transform.Rotate(new Vector3(0, 180, 0));
+        }
+        else if (directionToPlayer.y == 1)
+        {
+            gameObject.transform.Rotate(new Vector3(0, 0, 0));
         }
     }
 
     public void SetSpawnPosition(Vector2Int newSpawnPosition)
-    {  spawnPosition = newSpawnPosition;
+    { spawnPosition = newSpawnPosition;
     }
 
     public void SetGridOffset()
@@ -48,38 +115,54 @@ public class Stalker : MonoBehaviour
         {
             gridPositionOffset = new Vector2Int(0, spawnPosition.y);
         }
-        else if(directionToPlayer == Vector2Int.up || directionToPlayer == Vector2Int.down)
+        else if (directionToPlayer == Vector2Int.up || directionToPlayer == Vector2Int.down)
         {
             gridPositionOffset = new Vector2Int(spawnPosition.x, 0);
         }
-        
+
     }
     void Start()
     {
         gridManager = FindFirstObjectByType<GridManager>();
     }
 
-    // Update is called once per frame
+    // Update is called twice per frame
     void Update()
     {
         gridPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-        LookForPlayer();
+
+        if (isMoving)
+        {
+            ManageAttention();
+            Move();
+        }
+        else
+        {
+            ManageSightWhenLeaning();
+        }
+        attention = Mathf.Clamp(attention, 0, maxAttention);
     }
 
-    bool LookForPlayer()
+    void Move()
+    {
+        if (isMoving)
+            agent.destination = player.position;
+    }
+
+    void ManageSightWhenLeaning()
     {
         //Look in opposite direction down grid and check if player position equals any of them
 
         List<Node> lookNodes = new List<Node>();
         Dictionary<Vector2Int, Node> grid = gridManager.Grid;
 
-        for(int i = 0; i < gridManager.gridSize.x; i++)
+        for (int i = 0; i < gridManager.gridSize.x; i++)
         {
-            Node theNode; 
+            Node theNode;
 
             Vector2Int lookLocationOffset = new Vector2Int(directionToPlayer.x * i, directionToPlayer.y * i);
             Vector2Int lookLocation = gridPosition + lookLocationOffset + gridPositionOffset;
-            ;
+            
 
             //If within bounds of grid
             if ((lookLocation.x - 1 >= 0 && lookLocation.x + 1 < gridManager.gridSize.x) && (lookLocation.y - 1 >= 0 && lookLocation.y + 1 < gridManager.gridSize.y))
@@ -87,13 +170,40 @@ public class Stalker : MonoBehaviour
                 theNode = grid[lookLocation];
                 if (theNode.coords == gridManager.GetPlayerGridPosition())
                 {
-                    Debug.Log($"Can see player at {theNode.coords}");
-                    return true;
+                    attention += Time.deltaTime * attentionGrowth;
+                    return;
                 }
             }
         }
-        Debug.Log("Cannot find player");
-        Destroy(gameObject);
-        return false;
+        attention -= Time.deltaTime * attentionLoss;
+
+        if (attention <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void ManageAttention()
+    {
+        RaycastHit hit;
+        Vector3 lookDirection = (player.position - transform.position).normalized;
+
+        if (Physics.Raycast(transform.position, lookDirection, out hit, Mathf.Infinity, sightLayers))
+        {
+            if (hit.transform.gameObject.CompareTag("Player"))
+            {
+                attention += Time.deltaTime * attentionGrowth;
+            }
+            else
+            {
+                attention -= Time.deltaTime * attentionLoss;
+            }
+        }
+
+        if (attention <= 0)
+        {
+            isMoving = false;
+            Destroy(gameObject);
+        }
     }
 }
