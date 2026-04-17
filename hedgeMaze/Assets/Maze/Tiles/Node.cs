@@ -92,6 +92,7 @@ public class Node : MonoBehaviour
         if (CutsRemaining <= 0)
         {
             ChangeTypeTo(ENodeType.NONE);
+            NavMeshManager.instance.BakeNavmesh();
             CutsRemaining = cutsNeeded;
         }
 
@@ -106,8 +107,11 @@ public class Node : MonoBehaviour
 
     public void Grow()
     {
-        if(type == ENodeType.ROOT)
+        if (type == ENodeType.ROOT)
+        {
             ChangeTypeTo(ENodeType.HEDGE);
+            NavMeshManager.instance.BakeNavmesh();
+        }
     }
     public void ChangeTypeTo(ENodeType newType)
     {

@@ -15,8 +15,11 @@ public class Shears : Tool
 
     private void LateUpdate()
     {
-        animator.SetBool("isCutting", isCutting);
-        isCutting = false;
+        if (isActiveAndEnabled)
+        {
+            animator.SetBool("isCutting", isCutting);
+            isCutting = false;
+        }
     }
 
     public override void Equip() { }
