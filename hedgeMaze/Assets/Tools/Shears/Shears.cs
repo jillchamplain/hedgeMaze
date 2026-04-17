@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Ubisoft.Systems.Audio;
 using UnityEngine;
 
 public class Shears : Tool
@@ -7,6 +8,9 @@ public class Shears : Tool
     [SerializeField] Animator animator;
     bool isCutting;
     Node targetNode;
+    [SerializeField] SoundStreamSO cuttingNoise;
+    [SerializeField] SoundStreamSO hedgeNoise;
+
     void Start()
     {
         
@@ -43,6 +47,9 @@ public class Shears : Tool
     {
         targetNode.SpawnLeafParticle();
         targetNode.transform.DOShakePosition(0.15f, 0.02f, 30);
+        AudioManager.instance.PlayAudio(new AudioRequest(cuttingNoise).SetPoint(targetNode.transform.position));
+        AudioManager.instance.PlayAudio(new AudioRequest(hedgeNoise).SetPoint(targetNode.transform.position));
+
         targetNode.Cut();
     }
 

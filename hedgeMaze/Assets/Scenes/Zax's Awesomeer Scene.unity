@@ -28510,6 +28510,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5412613750009093979, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: hedgeNoise
+      value: 
+      objectReference: {fileID: 11400000, guid: b7933652c33732542be47c94d5ac99c6, type: 2}
+    - target: {fileID: 5412613750009093979, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: cuttingNoise
+      value: 
+      objectReference: {fileID: 11400000, guid: cce99209eae55b54d87c89631b362f54, type: 2}
     - target: {fileID: 5833067492104644471, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_Layer
       value: 6
