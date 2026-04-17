@@ -1,3 +1,4 @@
+using Ubisoft.Systems.Audio;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -10,6 +11,10 @@ public class Movement : MonoBehaviour
     [SerializeField] float sprintSpeed;
     [SerializeField] float acceleration;
 
+    [SerializeField] SoundStreamSO footsteps;
+    [SerializeField] float footstepCooldown;
+    float footstepTimer;
+
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
@@ -18,7 +23,6 @@ public class Movement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -26,12 +30,22 @@ public class Movement : MonoBehaviour
     {
         MyInput();
         SpeedControl();
-
+        Sound();
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    void Sound()
+    {
+        footstepTimer += Time.deltaTime * rb.linearVelocity.magnitude;
+        if (footstepTimer > footstepCooldown)
+        {
+            AudioManager.instance.PlayAudio(new AudioRequest(footsteps).SetPoint(transform.position));
+            footstepTimer = 0f;
+        }
     }
 
     void MyInput()
