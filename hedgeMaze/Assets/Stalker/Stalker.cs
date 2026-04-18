@@ -35,6 +35,8 @@ public class Stalker : MonoBehaviour
     [SerializeField] float maxAttention;
     [Tooltip("When seeing the player, this is the amount attention drops per second")]
     [SerializeField] float attentionGrowth;
+    [Tooltip("When seeing the player, this is the amount attention drops per second")]
+    [SerializeField] float attentionGrowthWhenLeaning;
     [Tooltip("When not seeing the player, this is the amount attention drops per second")]
     [SerializeField] float attentionLoss;
     [SerializeField] LayerMask sightLayers;
@@ -203,11 +205,26 @@ public class Stalker : MonoBehaviour
                 theNode = grid[lookLocation];
                 if (theNode.coords == gridManager.GetPlayerGridPosition())
                 {
-                    attention += Time.deltaTime * attentionGrowth;
+                    attention += Time.deltaTime * attentionGrowthWhenLeaning;
                     return;
                 }
             }
         }
+
+        RaycastHit hit;
+        Vector3 lookDirection = (player.position - transform.position).normalized;
+
+        if (Physics.Raycast(transform.position, lookDirection, out hit, Mathf.Infinity, sightLayers))
+        {
+            if (hit.transform.gameObject.CompareTag("Player"))
+            {
+                
+                attention += Time.deltaTime * attentionGrowthWhenLeaning;
+                return;
+            }
+        }
+
+
         attention -= Time.deltaTime * attentionLoss;
 
         if (attention <= 0)
@@ -271,7 +288,6 @@ public class Stalker : MonoBehaviour
     {        
         Transform camera = Camera.main.transform;
         AudioManager.instance.PlayAudio(new AudioRequest(riser).SetPoint(transform.position));
-        AudioManager.instance.PlayAudio(new AudioRequest(chaseNoise).SetPoint(transform.position));
 
         Vector3 endPosition = transform.position + transform.forward * 0.5f + new Vector3(0, 0.8f, 0);
         Vector3 lookTarget = transform.position + new Vector3(0, 0.8f, 0);

@@ -90,7 +90,7 @@ public class WateringCan : Tool
             waterParticleSystem.Play();
         }
 
-        curWaterAmount -= waterDepleteAmount;
+        curWaterAmount -= waterDepleteAmount * Time.deltaTime;
         if (curWaterAmount < 0)
         {
             waterParticleSystem.Stop();
@@ -121,7 +121,7 @@ public class WateringCan : Tool
 
     public void Refill(float refillAmount)
     {
-        curWaterAmount += refillAmount;
+        curWaterAmount += refillAmount * Time.deltaTime;
         if (curWaterAmount > maxWaterAmount)
             curWaterAmount = maxWaterAmount;
     }

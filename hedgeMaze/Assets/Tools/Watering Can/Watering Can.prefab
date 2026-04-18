@@ -54,10 +54,10 @@ MonoBehaviour:
   animator: {fileID: 4062378430270276528}
   curWaterAmount: 0
   maxWaterAmount: 100
-  waterDepleteAmount: 4
+  waterDepleteAmount: 3
   waterGivenAmount: 0
-  passiveWaterDepleteAmount: 1.8
-  sprintWaterDepleteAmount: 4.2
+  passiveWaterDepleteAmount: 1.3
+  sprintWaterDepleteAmount: 5.4
   waterParticleSystem: {fileID: 1428363196340338828}
 --- !u!95 &4062378430270276528
 Animator:

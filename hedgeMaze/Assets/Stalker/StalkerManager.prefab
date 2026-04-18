@@ -45,12 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnIntervalsPerFlowersWatered:
-  - {x: 100, y: 120}
-  - {x: 60, y: 80}
-  - {x: 40, y: 50}
   - {x: 30, y: 40}
-  - {x: 20, y: 30}
+  - {x: 24, y: 35}
+  - {x: 20, y: 26}
+  - {x: 12, y: 17}
   - {x: 10, y: 15}
-  queueSpawnInterval: {x: 10, y: 30}
+  toolActiveMultiplier: 3
   originPos: {x: 1, y: 1}
   stalkerPrefab: {fileID: 4494737853800815011, guid: f09c964d7bab32b4ead3a9aaf6cb1930, type: 3}
