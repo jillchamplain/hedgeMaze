@@ -38702,6 +38702,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
+      propertyPath: spawnIntervalsPerFlowersWatered.Array.data[0].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
+      propertyPath: spawnIntervalsPerFlowersWatered.Array.data[0].y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

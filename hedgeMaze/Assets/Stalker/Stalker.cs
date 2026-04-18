@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using NUnit.Framework;
+using Ubisoft.Systems.Audio;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -38,10 +39,16 @@ public class Stalker : MonoBehaviour
     [SerializeField] float attentionLoss;
     [SerializeField] LayerMask sightLayers;
     float attention;
+    [SerializeField] SoundStreamSO chaseNoise;
+    [SerializeField] SoundStreamSO spawnNoise;
+    [SerializeField] SoundStreamSO footsteps;
+    [SerializeField] SoundStreamSO neckCrack;
+    [SerializeField] SoundStreamSO riser;
 
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
+        AudioManager.instance.PlayAudio(new AudioRequest(spawnNoise).SetPoint(transform.position));
         StartCoroutine(Lean());
     }
 
@@ -60,6 +67,7 @@ public class Stalker : MonoBehaviour
         }
 
         isMoving = true;
+        AudioManager.instance.PlayAudio(new AudioRequest(chaseNoise).SetPoint(transform.position));
 
         elapsed = 0;
         while (elapsed < rotateBackDuration)
@@ -105,6 +113,19 @@ public class Stalker : MonoBehaviour
             gameObject.transform.Rotate(new Vector3(0, 0, 0));
         }
     }
+
+    [SerializeField] float footstepCooldown;
+    float footstepTimer;
+    void Sound()
+    {
+        footstepTimer += Time.deltaTime;
+        if (footstepTimer > footstepCooldown)
+        {
+            AudioManager.instance.PlayAudio(new AudioRequest(footsteps).SetPoint(transform.position));
+            footstepTimer = 0f;
+        }
+    }
+
 
     public void SetSpawnPosition(Vector2Int newSpawnPosition)
     { spawnPosition = newSpawnPosition;
@@ -158,6 +179,7 @@ public class Stalker : MonoBehaviour
     {
         if (isMoving)
             agent.destination = player.position;
+        Sound();
     }
 
     void ManageSightWhenLeaning()
@@ -248,6 +270,8 @@ public class Stalker : MonoBehaviour
     IEnumerator PlayerDeathAnimation()
     {        
         Transform camera = Camera.main.transform;
+        AudioManager.instance.PlayAudio(new AudioRequest(riser).SetPoint(transform.position));
+        AudioManager.instance.PlayAudio(new AudioRequest(chaseNoise).SetPoint(transform.position));
 
         Vector3 endPosition = transform.position + transform.forward * 0.5f + new Vector3(0, 0.8f, 0);
         Vector3 lookTarget = transform.position + new Vector3(0, 0.8f, 0);
@@ -269,8 +293,9 @@ public class Stalker : MonoBehaviour
 
         StartCoroutine(MakeRed());
 
-        Tween shakeTween = camera.DOShakePosition(0.8f, new Vector3(0, 0.01f, 0), 28, 90, false, false);
+        Tween shakeTween = camera.DOShakePosition(2, new Vector3(0, 0.005f, 0), 28, 90, false, false);
         yield return shakeTween.WaitForCompletion();
+        AudioManager.instance.PlayAudio(new AudioRequest(neckCrack).SetPoint(transform.position));
         camera.DOLocalRotate(new Vector3(0, 180, 40) + camera.eulerAngles, 0.2f).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 823545f363a582c4c8175ce6920fefb3, type: 3}
-  m_Name: Horror Hit
+  m_Name: Riser
   m_EditorClassIdentifier: 
   clip:
-  - {fileID: 8300000, guid: d710895dc6fb68b4a92269cdf3caaf86, type: 3}
+  - {fileID: 8300000, guid: 31413cb38d1224f49a884c3513d326ba, type: 3}
   volume: 1
   doRandomPitch: 0
-  pitch: 1.47
+  pitch: 1
   pitchRange: {x: 1, y: 1.5}
   doSpatialAudio: 1
   minDistance: 0

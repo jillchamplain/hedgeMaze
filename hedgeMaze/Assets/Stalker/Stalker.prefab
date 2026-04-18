@@ -64,6 +64,12 @@ MonoBehaviour:
   sightLayers:
     serializedVersion: 2
     m_Bits: 9
+  chaseNoise: {fileID: 11400000, guid: 7420831f7f311114482382f555ed5886, type: 2}
+  spawnNoise: {fileID: 11400000, guid: b7933652c33732542be47c94d5ac99c6, type: 2}
+  footsteps: {fileID: 11400000, guid: dc25d2b17c1cabb44b326b8e92d5ba04, type: 2}
+  neckCrack: {fileID: 11400000, guid: 4ecba21eaaf546645baf488e71e2be0d, type: 2}
+  riser: {fileID: 11400000, guid: dafb6dd1f1cb9ac478ce84beba421923, type: 2}
+  footstepCooldown: 0.3
 --- !u!195 &6018282024505740273
 NavMeshAgent:
   m_ObjectHideFlags: 0
