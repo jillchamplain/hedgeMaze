@@ -58,8 +58,9 @@ MonoBehaviour:
   rotateBackDuration: 0.5
   visuals: {fileID: 9092544795755648106}
   agent: {fileID: 6018282024505740273}
-  maxAttention: 2.5
+  maxAttention: 2.6
   attentionGrowth: 0.4
+  attentionGrowthWhenLeaning: 0.9
   attentionLoss: 1
   sightLayers:
     serializedVersion: 2

@@ -90,7 +90,7 @@ public class WateringCan : Tool
             waterParticleSystem.Play();
         }
 
-        curWaterAmount -= waterDepleteAmount;
+        curWaterAmount -= waterDepleteAmount * Time.deltaTime;
         if (curWaterAmount < 0)
         {
             waterParticleSystem.Stop();

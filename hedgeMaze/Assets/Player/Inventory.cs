@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<Tool> tools = new List<Tool>();
     [SerializeField] float toolChangeBufferTime;
     [SerializeField] float toolStopBufferTime;
-    bool usingTool = false;
+    public bool usingTool = false;
     bool canChangeTool = true;
     [SerializeField] Tool curToolEquipped;
     int curToolIndex = 0;
@@ -32,7 +32,6 @@ public class Inventory : MonoBehaviour
         {
             //Debug.Log("Click");
             UseCurrrentTool(Interaction.instance.CheckRaycast());
-            usingTool = true;
         }
 
 
@@ -40,11 +39,12 @@ public class Inventory : MonoBehaviour
         {
             UseCurrrentTool(Interaction.instance.CheckRaycast());
             //Debug.Log("Hold Down");
-            usingTool = true;
         }
         else if (Input.GetMouseButtonUp(0))
         {
             curToolEquipped.StopUse();
+            usingTool = false;
+
         }
     }
 
@@ -147,9 +147,15 @@ public class Inventory : MonoBehaviour
     void UseCurrrentTool(GameObject hitObject)
     {
         if (curToolEquipped && hitObject != null)
+        {
+            usingTool = true;
             curToolEquipped.Use(hitObject);
+        }
         else if (hitObject == null)
+        {
             curToolEquipped.StopUse();
+            usingTool = false;
+        }
     }
 
     IEnumerator ChangeToolTimer()

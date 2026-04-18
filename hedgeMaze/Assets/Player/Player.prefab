@@ -76,6 +76,7 @@ MonoBehaviour:
   - {fileID: 5412613750009093979}
   toolChangeBufferTime: 0.2
   toolStopBufferTime: 0
+  usingTool: 0
   curToolEquipped: {fileID: 4969222703403571785}
 --- !u!54 &8024335684107343850
 Rigidbody:
@@ -810,10 +811,6 @@ PrefabInstance:
     - target: {fileID: 8050809122793006316, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
       propertyPath: waterGivenAmount
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050809122793006316, guid: 8db986e756d757e4880bf45af39dd441, type: 3}
-      propertyPath: waterDepleteAmount
-      value: 0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
