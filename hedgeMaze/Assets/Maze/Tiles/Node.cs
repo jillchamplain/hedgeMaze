@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Ubisoft.Systems.Audio;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -141,11 +140,11 @@ public class Node : MonoBehaviour
         coords.x = Mathf.RoundToInt(transform.position.x / gridManager.unityGridSize);
         coords.y = Mathf.RoundToInt(transform.position.z / gridManager.unityGridSize);
         //If not in Prefab Mode
-        if (PrefabStageUtility.GetCurrentPrefabStage() == null)
+/*        if (PrefabStageUtility.GetCurrentPrefabStage() == null)
         {
             gameObject.name = $"Tile {coords.x}_{coords.y}";
         }
-    }
+*/    }
 
     private void OnTriggerEnter(Collider other)
     {

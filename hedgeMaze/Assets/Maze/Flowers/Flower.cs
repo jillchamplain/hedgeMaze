@@ -1,4 +1,3 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Flower : MonoBehaviour
@@ -24,7 +23,7 @@ public class Flower : MonoBehaviour
 
     public void Water(float waterAmount)
     {
-        waterValue += waterAmount;
+        waterValue += waterAmount * Time.deltaTime;
         if (waterValue > waterRequirement)
         {
             isWatered = true;

@@ -288,7 +288,6 @@ public class Stalker : MonoBehaviour
     {        
         Transform camera = Camera.main.transform;
         AudioManager.instance.PlayAudio(new AudioRequest(riser).SetPoint(transform.position));
-        AudioManager.instance.PlayAudio(new AudioRequest(chaseNoise).SetPoint(transform.position));
 
         Vector3 endPosition = transform.position + transform.forward * 0.5f + new Vector3(0, 0.8f, 0);
         Vector3 lookTarget = transform.position + new Vector3(0, 0.8f, 0);

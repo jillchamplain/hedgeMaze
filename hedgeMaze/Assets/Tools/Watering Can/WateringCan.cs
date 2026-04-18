@@ -121,7 +121,7 @@ public class WateringCan : Tool
 
     public void Refill(float refillAmount)
     {
-        curWaterAmount += refillAmount;
+        curWaterAmount += refillAmount * Time.deltaTime;
         if (curWaterAmount > maxWaterAmount)
             curWaterAmount = maxWaterAmount;
     }

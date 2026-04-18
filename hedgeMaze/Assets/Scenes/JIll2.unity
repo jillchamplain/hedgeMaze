@@ -15409,7 +15409,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 34137b93f151d6d419a62b7f409dd88c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0ae16c09dd8f894478f771033bb42cc2, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &858245776
 Transform:
@@ -29894,6 +29894,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: waterGivenAmount
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: waterDepleteAmount
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: passiveWaterDepleteAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5011939602360455198, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -40353,27 +40365,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[1].x
-      value: 19
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[1].y
-      value: 27
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[2].x
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[2].y
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[3].x
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[3].y
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7107238410795968104, guid: e51a77d861c487f45bff7d023719dc54, type: 3}
       propertyPath: spawnIntervalsPerFlowersWatered.Array.data[4].x

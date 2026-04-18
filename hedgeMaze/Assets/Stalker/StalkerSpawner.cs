@@ -19,12 +19,9 @@ public class StalkerSpawner : MonoBehaviour
     void Start()
     {
         gridManager = FindFirstObjectByType<GridManager>();
-    }
-
-    private void OnEnable()
-    {
         GameManager.instance.onWaterFlower += GenerateNewStalkerTime;
     }
+
 
     private void OnDisable()
     {
