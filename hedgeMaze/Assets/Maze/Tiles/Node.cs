@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ubisoft.Systems.Audio;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -42,6 +43,7 @@ public class Node : MonoBehaviour
     [SerializeField] GameObject hedgeModel;
     [SerializeField] GameObject hedgeParticlePF;
     [SerializeField] GameObject rootModel;
+    [SerializeField] SoundStreamSO growNoise;
 
     [Header("Gameplay")]
     [SerializeField] public int cutsNeeded = 8;
@@ -110,6 +112,7 @@ public class Node : MonoBehaviour
         if (type == ENodeType.ROOT)
         {
             ChangeTypeTo(ENodeType.HEDGE);
+            AudioManager.instance.PlayAudio(new AudioRequest(growNoise).SetPoint(transform.position));
             NavMeshManager.instance.BakeNavmesh();
         }
     }
