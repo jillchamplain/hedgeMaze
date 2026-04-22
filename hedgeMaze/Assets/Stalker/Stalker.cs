@@ -8,7 +8,6 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 public class Stalker : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
@@ -314,7 +313,9 @@ public class Stalker : MonoBehaviour
         AudioManager.instance.PlayAudio(new AudioRequest(neckCrack).SetPoint(transform.position));
         camera.DOLocalRotate(new Vector3(0, 180, 40) + camera.eulerAngles, 0.2f).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(0.2f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        SceneManager.LoadScene(2);
     }
 
     private void OnDestroy()

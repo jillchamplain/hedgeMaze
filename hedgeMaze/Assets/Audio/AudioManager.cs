@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,9 @@ namespace Ubisoft.Systems.Audio
 
         private ObjectPool<AudioObject> pool;
         private Dictionary<string, AudioObject> keyedItems;
+        private List<AudioObject> activeAudioObjects;
+
+        bool allowNewAudio = true;
 
         void Awake()
         {
@@ -30,10 +34,13 @@ namespace Ubisoft.Systems.Audio
             {
                 Destroy(gameObject);
             }
+
+            activeAudioObjects = new List<AudioObject>();
         }
 
         public void PlayAudio(AudioRequest request)
         {
+            if (!allowNewAudio) return;
             if (!CanPlay(request.stream)) return;
 
             if (request.delay > 0.0f) StartCoroutine(IPlayAudioDelayed(request, request.delay));
@@ -70,6 +77,7 @@ namespace Ubisoft.Systems.Audio
             AudioObject audioObject = SpawnAudioObject(request.stream);
             request.InitializeAudioObject(audioObject);
             audioObject.source.Play();
+            activeAudioObjects.Add(audioObject);
         }
 
         private IEnumerator IPlayAudioDelayed(AudioRequest request, float delay)
@@ -102,9 +110,40 @@ namespace Ubisoft.Systems.Audio
 
         private void OnReturnToPool(AudioObject audioObj)
         {
+            if (activeAudioObjects.Contains(audioObj))
+                activeAudioObjects.Remove(audioObj);
+
             audioObj.gameObject.SetActive(false);
             audioObj.source.Stop();
         }
+
+        public void KillAllAudio(float fadeTime)
+        {
+            for (int i = 0; i < activeAudioObjects.Count; i++)
+            {
+                if (fadeTime > 0.0f)
+                {
+                    if (activeAudioObjects[i].source != null && activeAudioObjects[i].source.isPlaying)
+                        activeAudioObjects[i].source.DOFade(0.0f, fadeTime);
+                }
+            }
+
+            GameObject[] untracked = GameObject.FindGameObjectsWithTag("UntrackedAudio");
+
+            for (int i = 0; i < untracked.Length; i++)
+            {
+                AudioSource current = untracked[i].GetComponent<AudioSource>();
+                if (current == null) continue;
+
+                if (fadeTime > 0.0f)
+                {
+                    if (current != null && current.isPlaying)
+                        current.DOFade(0.0f, fadeTime);
+                }
+            }
+        }
+
+        public void SetAllowAudio(bool allow) => allowNewAudio = allow;
         #endregion
     }
 }

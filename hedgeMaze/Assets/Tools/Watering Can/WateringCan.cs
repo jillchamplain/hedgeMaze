@@ -1,3 +1,4 @@
+using Ubisoft.Systems.Audio;
 using UnityEngine;
 
 public class WateringCan : Tool
@@ -13,6 +14,8 @@ public class WateringCan : Tool
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
     [SerializeField] ParticleSystem waterParticleSystem;
+    [SerializeField] SoundStreamSO wateringNoise;
+
     bool isWatering = false;
     bool shouldSprintDeplete = false;
     void SetSprintDeplete(bool newSprintDeplete) {  shouldSprintDeplete = newSprintDeplete;}
@@ -68,6 +71,13 @@ public class WateringCan : Tool
         //Debug.Log(hitObject);
         if (hitObject.GetComponent<Flower>())
         {
+            if (!isWatering)
+            {
+                AudioManager.instance.PlayAudio(new AudioRequest(wateringNoise).SetLooping(true));
+                Debug.Log("Play my audios");
+            }
+
+
             isWatering = true;
             Water();
             if(curWaterAmount > 0)
