@@ -36,7 +36,9 @@ public class GameManager : MonoBehaviour
         if(flowersWatered >= totalFlowers)
         {
             Debug.Log("You win!");
-            SceneManager.LoadScene(0);
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            SceneManager.LoadScene(3);
         }
     }
 
