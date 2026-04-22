@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class WateringCan : Tool
 {
-    [SerializeField] Movement playerMovement;
-    [SerializeField] Animator animator;
     [SerializeField] float curWaterAmount;
     public float GetWaterAmount() {  return curWaterAmount; }
     [SerializeField] float maxWaterAmount;
@@ -13,9 +11,14 @@ public class WateringCan : Tool
     [SerializeField] float waterGivenAmount;
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
+    [Header("References")]
+    [SerializeField] Movement playerMovement;
+    [SerializeField] Animator animator;
     [SerializeField] ParticleSystem waterParticleSystem;
     [SerializeField] SoundStreamSO wateringNoise;
-
+    [SerializeField] GameObject refillCollider;
+    
+    public bool isRefilling = false;
     bool isWatering = false;
     bool shouldSprintDeplete = false;
     void SetSprintDeplete(bool newSprintDeplete) {  shouldSprintDeplete = newSprintDeplete;}
@@ -34,6 +37,7 @@ public class WateringCan : Tool
     private void LateUpdate()
     {
         animator.SetBool("isWatering", isWatering);
+        animator.SetBool("isRefilling", isRefilling);
     }
 
     private void FixedUpdate()
@@ -46,6 +50,19 @@ public class WateringCan : Tool
         {
             SprintDepleteWater();
         }
+    }
+
+    public override void AddedToInventory()
+    {
+        refillCollider.SetActive(false);
+        isRefilling = false;
+        isWatering = false;
+    }
+
+    public override void RemovedFromInventory()
+    {
+        refillCollider.SetActive(true);
+        isWatering = false;
     }
 
     public override void Equip()
@@ -68,7 +85,7 @@ public class WateringCan : Tool
 
     public override void Use(GameObject hitObject)
     {
-        //Debug.Log(hitObject);
+        //If we hit a flower, water
         if (hitObject.GetComponent<Flower>())
         {
             if (!isWatering)
@@ -85,9 +102,10 @@ public class WateringCan : Tool
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
         }
 
+        //If we hit a fountain, place it there
         else if(hitObject.GetComponentInParent<Fountain>())
         {
-            Refill(hitObject.GetComponentInParent<Fountain>().refillAmount);
+            Refill(hitObject.GetComponentInParent<Fountain>());
         }
     }
 
@@ -129,10 +147,33 @@ public class WateringCan : Tool
         }
     }
 
-    public void Refill(float refillAmount)
+    public void Refill(Fountain theFountain)
     {
-        curWaterAmount += refillAmount * Time.deltaTime;
+        Debug.Log("Trying to refill");
+        if (isRefilling)
+            return;
+
+        isRefilling = true;
+        
+        //Parent to the fountain and let the player interact with it to pick it up again
+        this.transform.parent = theFountain.wateringCanHolder.transform;
+        this.transform.position = theFountain.wateringCanHolder.transform.position;
+        refillCollider.SetActive(true);
+
+        curWaterAmount += theFountain.refillAmount * Time.deltaTime;
         if (curWaterAmount > maxWaterAmount)
             curWaterAmount = maxWaterAmount;
+
+
+        //Remove tool from tool list so player has to grab it to reequip
+        Inventory.instance.RemoveTool(this);
     }
+
+    public void StopRefill()
+    {
+        isRefilling = false;
+        refillCollider.SetActive(false);
+        Inventory.instance.EquipTool("WateringCan");
+    }
+
 }

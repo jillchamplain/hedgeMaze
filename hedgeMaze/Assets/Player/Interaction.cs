@@ -39,6 +39,7 @@ public class Interaction : MonoBehaviour
             if(selection.gameObject != null)
                 hitObject = selection.gameObject;
         }
+        //Debug.Log(hitObject);
         return hitObject; 
     }
 
