@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &535185134486452502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8056468382291846683}
+  - component: {fileID: 6515098375930108471}
+  m_Layer: 3
+  m_Name: Refill Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8056468382291846683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535185134486452502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3831215768688804773}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6515098375930108471
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535185134486452502}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6109553272740072006
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +88,7 @@ Transform:
   m_Children:
   - {fileID: 8540106340619049660}
   - {fileID: 7316710755074061313}
+  - {fileID: 8056468382291846683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8050809122793006316
@@ -47,18 +103,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3a569172fc3e045b3007acf7bc2274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: WateringCan
+  toolName: WateringCan
   model: {fileID: 7980938217203986107}
   isEquipped: 0
-  playerMovement: {fileID: 0}
-  animator: {fileID: 4062378430270276528}
   curWaterAmount: 0
   maxWaterAmount: 100
   waterDepleteAmount: 3
   waterGivenAmount: 0
   passiveWaterDepleteAmount: 1.3
   sprintWaterDepleteAmount: 5.4
+  playerMovement: {fileID: 0}
+  animator: {fileID: 4062378430270276528}
   waterParticleSystem: {fileID: 1428363196340338828}
+  wateringNoise: {fileID: 0}
+  refillCollider: {fileID: 535185134486452502}
+  isRefilling: 0
 --- !u!95 &4062378430270276528
 Animator:
   serializedVersion: 7

@@ -132,11 +132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23e2483b36a48d4d9099aa3be56c2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Shears
+  toolName: Shears
   model: {fileID: 3490406113631942537}
   isEquipped: 0
   timeToCut: 8
   animator: {fileID: 0}
+  cuttingNoise: {fileID: 0}
+  hedgeNoise: {fileID: 0}
 --- !u!1 &488176554090851092
 GameObject:
   m_ObjectHideFlags: 0

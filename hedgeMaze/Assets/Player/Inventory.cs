@@ -9,9 +9,12 @@ public class Inventory : MonoBehaviour
     [SerializeField] float toolChangeBufferTime;
     [SerializeField] float toolStopBufferTime;
     public bool usingTool = false;
+    public bool tryingToUseTool = false;
     bool canChangeTool = true;
     [SerializeField] Tool curToolEquipped;
     int curToolIndex = 0;
+    [Header("References")]
+    [SerializeField] GameObject toolHolder;
 
     private void Start()
     {
@@ -24,27 +27,39 @@ public class Inventory : MonoBehaviour
         UseTool();
 
         ChangeTool();
+
+        if (tryingToUseTool)
+        {
+            TryUseCurrentTool(Interaction.instance.CheckRaycast());
+        }
     }
 
     void UseTool()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (curToolEquipped) //If has Tool in Hand
         {
-            //Debug.Log("Click");
-            UseCurrrentTool(Interaction.instance.CheckRaycast());
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!TryToAddTool(Interaction.instance.CheckRaycast()))
+                {
+                    tryingToUseTool = true;
+
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                curToolEquipped.StopUse();
+                usingTool = false;
+                tryingToUseTool = false;
+            }
         }
 
-
-        else if (Input.GetMouseButton(0))
+        else if(!curToolEquipped)
         {
-            UseCurrrentTool(Interaction.instance.CheckRaycast());
-            //Debug.Log("Hold Down");
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            curToolEquipped.StopUse();
-            usingTool = false;
-
+            if (Input.GetMouseButtonDown(0))
+            {
+                TryToAddTool(Interaction.instance.CheckRaycast());
+            }   
         }
     }
 
@@ -93,7 +108,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void UnEquipTool()
+    public void UnEquipTool()
     {
         foreach (Tool tool in tools)
         {
@@ -101,6 +116,68 @@ public class Inventory : MonoBehaviour
         }
         curToolEquipped = null;
         curToolIndex = -1;
+    }
+
+    public void RemoveTool(Tool theTool)
+    {
+        theTool.RemovedFromInventory();
+        tools.Remove(theTool);
+        tools.TrimExcess();
+    }
+
+    void AddTool(Tool theTool)
+    {
+        bool isRepeatTool = false;
+        foreach (Tool tool in tools)
+        {
+            //Debug.Log(tool);
+            if (tool == theTool)
+                isRepeatTool = true;
+        }
+
+        if (!isRepeatTool)
+        {
+            UnEquipTool();
+            tools.Add(theTool);
+
+            theTool.AddedToInventory();
+
+            theTool.transform.parent = toolHolder.transform;
+            theTool.transform.position = toolHolder.transform.position + theTool.toolHoldTransformOffset;
+            EquipTool(theTool); 
+        }
+    }
+
+    bool TryToAddTool(GameObject hitObject)
+    {
+        //Debug.Log($"Trying to add {hitObject}");
+        if (hitObject != null && hitObject.GetComponentInParent<Tool>())
+        {
+            //Debug.Log($"Trying to add {hitObject}");
+            AddTool(hitObject.GetComponentInParent<Tool>());
+            return true;
+        }
+        return false;
+    }
+
+    void EquipTool(Tool theTool)
+    {
+        curToolEquipped = null;
+
+        foreach(Tool tool in tools)
+        {
+            if(tool != theTool)
+            {
+                tool.isEquipped = false;
+                tool.model.SetActive(false);
+            }
+            else
+            {
+                tool.isEquipped = true;
+                curToolEquipped = tool;
+                curToolEquipped.model.SetActive(true);
+            }
+        }
     }
 
     void EquipTool(int index)
@@ -124,11 +201,11 @@ public class Inventory : MonoBehaviour
     }
 
 
-    void EquipTool(string nameOfTool)
+    public void EquipTool(string nameOfTool)
     {
         for(int i = 0; i < tools.Count; i++)
         {
-            if (tools[i].name == nameOfTool)
+            if (tools[i].toolName == nameOfTool)
             {
                 tools[i].isEquipped = true;
                 curToolEquipped = tools[i];
@@ -144,7 +221,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void UseCurrrentTool(GameObject hitObject)
+    void TryUseCurrentTool(GameObject hitObject)
     {
         if (curToolEquipped && hitObject != null)
         {

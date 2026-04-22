@@ -27,6 +27,16 @@ public class Shears : Tool
     }
 
     public override void Equip() { }
+
+    public override void AddedToInventory()
+    {
+        isCutting = false;
+    }
+
+    public override void RemovedFromInventory()
+    {
+        isCutting = false;
+    }
     public override void UnEquip() { }
     public override void Use(GameObject hitObject)
     {
