@@ -11,12 +11,14 @@ public class WateringCan : Tool
     [SerializeField] float waterGivenAmount;
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
+
     [Header("References")]
     [SerializeField] Movement playerMovement;
     [SerializeField] Animator animator;
     [SerializeField] ParticleSystem waterParticleSystem;
     [SerializeField] SoundStreamSO wateringNoise;
     [SerializeField] GameObject refillCollider;
+    Fountain parentFountain;
     
     public bool isRefilling = false;
     bool isWatering = false;
@@ -42,11 +44,7 @@ public class WateringCan : Tool
 
     private void FixedUpdate()
     {
-        if (!playerMovement.GetSprinting())
-        {
-            PassiveDepleteWater();
-        }
-        else
+        if (playerMovement.GetSprinting() && isEquipped)
         {
             SprintDepleteWater();
         }
@@ -61,24 +59,25 @@ public class WateringCan : Tool
 
     public override void RemovedFromInventory()
     {
+        isEquipped = false;
         refillCollider.SetActive(true);
         isWatering = false;
     }
 
     public override void Equip()
     {
-
+        isEquipped = true;
     }
 
     public override void UnEquip()
     {
+        isEquipped = false;
         isWatering = false;
         waterParticleSystem.Stop();
     }
 
     public override void StopUse()
     {
-        //Debug.Log("Stopping particle system");
         isWatering = false;
         waterParticleSystem.Stop();
     }
@@ -94,24 +93,23 @@ public class WateringCan : Tool
                 Debug.Log("Play my audios");
             }
 
-
             isWatering = true;
-            Water();
+
             if(curWaterAmount > 0)
                 hitObject.GetComponent<Flower>().Water(waterGivenAmount);
+
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
         }
 
         //If we hit a fountain, place it there
         else if(hitObject.GetComponentInParent<Fountain>())
         {
-            Refill(hitObject.GetComponentInParent<Fountain>());
+            StartRefill(hitObject.GetComponentInParent<Fountain>());
         }
     }
 
     public void Water()
     {
-        //Debug.Log($"water particle system {waterParticleSystem.isPlaying}");
         if (curWaterAmount > 0)
         {
             Debug.Log("Playing particle system");
@@ -124,7 +122,6 @@ public class WateringCan : Tool
             waterParticleSystem.Stop();
             curWaterAmount = 0;
         }
-
     }
 
     public void PassiveDepleteWater()
@@ -147,32 +144,44 @@ public class WateringCan : Tool
         }
     }
 
-    public void Refill(Fountain theFountain)
+    public void StartRefill(Fountain theFountain)
     {
         Debug.Log("Trying to refill");
         if (isRefilling)
+        {
+            Refill(theFountain);
             return;
+        }
 
         isRefilling = true;
-        
+
         //Parent to the fountain and let the player interact with it to pick it up again
+        theFountain.wateringCan = this;
+        parentFountain = theFountain;
         this.transform.parent = theFountain.wateringCanHolder.transform;
         this.transform.position = theFountain.wateringCanHolder.transform.position;
         refillCollider.SetActive(true);
 
-        curWaterAmount += theFountain.refillAmount * Time.deltaTime;
-        if (curWaterAmount > maxWaterAmount)
-            curWaterAmount = maxWaterAmount;
+        Refill(theFountain);
 
 
         //Remove tool from tool list so player has to grab it to reequip
         Inventory.instance.RemoveTool(this);
     }
 
+    public void Refill(Fountain theFountain)
+    {
+        curWaterAmount += theFountain.refillAmount * Time.deltaTime;
+        if (curWaterAmount > maxWaterAmount)
+            curWaterAmount = maxWaterAmount;
+    }
+
     public void StopRefill()
     {
         isRefilling = false;
         refillCollider.SetActive(false);
+        parentFountain.wateringCan = null;
+        parentFountain = null;
         Inventory.instance.EquipTool("WateringCan");
     }
 
