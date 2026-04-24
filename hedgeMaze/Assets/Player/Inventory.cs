@@ -141,9 +141,9 @@ public class Inventory : MonoBehaviour
             tools.Add(theTool);
 
             theTool.AddedToInventory();
-
-            theTool.transform.parent = toolHolder.transform;
             theTool.transform.position = toolHolder.transform.position + theTool.toolHoldTransformOffset;
+            theTool.transform.parent = toolHolder.transform;
+            
             EquipTool(theTool); 
         }
     }
