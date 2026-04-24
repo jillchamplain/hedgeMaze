@@ -18,7 +18,7 @@ public class WateringCan : Tool
     [SerializeField] ParticleSystem waterParticleSystem;
     [SerializeField] SoundStreamSO wateringNoise;
     [SerializeField] GameObject refillCollider;
-    Fountain parentFountain;
+    [SerializeField] Fountain parentFountain;
     
     public bool isRefilling = false;
     bool isWatering = false;
@@ -52,6 +52,8 @@ public class WateringCan : Tool
 
     public override void AddedToInventory()
     {
+        parentFountain.wateringCan = null;
+        parentFountain = null;
         refillCollider.SetActive(false);
         isRefilling = false;
         isWatering = false;
@@ -101,10 +103,15 @@ public class WateringCan : Tool
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
         }
 
-        //If we hit a fountain, place it there
-        else if(hitObject.GetComponentInParent<Fountain>())
+        //If we hit a fountain, place it there IF NOT ALREADY IN FOUNTAIN
+        else if(hitObject.GetComponentInParent<Fountain>() && !parentFountain)
         {
             StartRefill(hitObject.GetComponentInParent<Fountain>());
+        }
+
+        else if(hitObject.GetComponentInParent<Fountain>() && parentFountain && isRefilling)
+        {
+            Refill(hitObject.GetComponentInParent<Fountain>());
         }
     }
 
@@ -149,7 +156,6 @@ public class WateringCan : Tool
         Debug.Log("Trying to refill");
         if (isRefilling)
         {
-            Refill(theFountain);
             return;
         }
 
@@ -162,16 +168,14 @@ public class WateringCan : Tool
         this.transform.position = theFountain.wateringCanHolder.transform.position;
         refillCollider.SetActive(true);
 
-        Refill(theFountain);
-
-
         //Remove tool from tool list so player has to grab it to reequip
         Inventory.instance.RemoveTool(this);
     }
 
     public void Refill(Fountain theFountain)
     {
-        curWaterAmount += theFountain.refillAmount * Time.deltaTime;
+        Debug.Log("Watering Can is refilling");
+        curWaterAmount += theFountain.refillAmount;
         if (curWaterAmount > maxWaterAmount)
             curWaterAmount = maxWaterAmount;
     }

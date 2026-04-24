@@ -11,9 +11,15 @@ public abstract class Tool : MonoBehaviour
 
     public abstract void RemovedFromInventory();
 
-    public abstract void Equip();
+    public virtual void Equip()
+    {
+      isEquipped = true;
+    }
 
-    public abstract void UnEquip();
+    public virtual void UnEquip()
+    {
+        isEquipped = false;
+    }
 
     public abstract void Use(GameObject hitObject);
 

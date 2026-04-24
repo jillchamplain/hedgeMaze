@@ -15,7 +15,7 @@ public class Fountain : MonoBehaviour
 
     public void Pump()
     {
-        if(!isPumping)
+        if(!isPumping && wateringCan)
             StartCoroutine(PumpTimer());
     }
 
@@ -24,7 +24,8 @@ public class Fountain : MonoBehaviour
         isPumping = true;
         particleSystem.Play();
         yield return new WaitForSeconds(refillPumpTime);
-        wateringCan.Refill(this);
+        if(wateringCan)
+            wateringCan.Refill(this);
         particleSystem.Stop();
         isPumping = false;
     }

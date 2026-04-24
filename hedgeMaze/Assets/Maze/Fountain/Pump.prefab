@@ -5181,10 +5181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a16c7ad408419a4789389f3aa4d1554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refillAmount: 0
-  wateringCanHolder: {fileID: 3544379815172674691}
+  refillAmount: 10
+  refillPumpTime: 2
   visuals: {fileID: 4536174629266614253}
   particleSystem: {fileID: 8852119023744780524}
+  wateringCan: {fileID: 0}
+  wateringCanHolder: {fileID: 3544379815172674691}
 --- !u!114 &4536174629266614253
 MonoBehaviour:
   m_ObjectHideFlags: 0
