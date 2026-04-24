@@ -6,15 +6,17 @@ public class Inventory : MonoBehaviour
 {
     [HideInInspector] public static Inventory instance;
     [SerializeField] List<Tool> tools = new List<Tool>();
-    [SerializeField] float toolChangeBufferTime;
-    [SerializeField] float toolStopBufferTime;
+    [SerializeField] Tool curToolEquipped;
+    int curToolIndex = 0;
     public bool usingTool = false;
     public bool tryingToUseTool = false;
     bool canChangeTool = true;
-    [SerializeField] Tool curToolEquipped;
-    int curToolIndex = 0;
+
+    [SerializeField] float toolChangeBufferTime;
+    
     [Header("References")]
     [SerializeField] GameObject toolHolder;
+    [SerializeField] Hand handTool;
 
     private void Start()
     {
@@ -34,6 +36,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
+    #region Use
     void UseTool()
     {
         if (curToolEquipped) //If has Tool in Hand
@@ -62,6 +66,21 @@ public class Inventory : MonoBehaviour
             }   
         }
     }
+
+    void TryUseCurrentTool(GameObject hitObject)
+    {
+        if (curToolEquipped && hitObject != null)
+        {
+            usingTool = true;
+            curToolEquipped.Use(hitObject);
+        }
+        else if (curToolEquipped && hitObject == null)
+        {
+            curToolEquipped.StopUse();
+            usingTool = false;
+        }
+    }
+    #endregion
 
     void ChangeTool()
     {
@@ -118,10 +137,20 @@ public class Inventory : MonoBehaviour
         curToolIndex = -1;
     }
 
-    public void RemoveTool(Tool theTool)
+    public void RemoveTool(Tool theTool) //When removing a tool from the inventory equip the "Hand Tool"
     {
+        int replaceIndex = 0;
+        for(int i = 0; i < tools.Count; i++)
+        {
+            if(tools[i] == theTool)
+                replaceIndex = i;
+        }
         theTool.RemovedFromInventory();
-        tools.Remove(theTool);
+
+        tools[replaceIndex] = handTool;
+        handTool.replacedTool = theTool;
+        handTool.AddedToInventory();
+        EquipTool(handTool);
         tools.TrimExcess();
     }
 
@@ -130,7 +159,6 @@ public class Inventory : MonoBehaviour
         bool isRepeatTool = false;
         foreach (Tool tool in tools)
         {
-            //Debug.Log(tool);
             if (tool == theTool)
                 isRepeatTool = true;
         }
@@ -139,12 +167,21 @@ public class Inventory : MonoBehaviour
         {
             UnEquipTool();
             tools.Add(theTool);
-
             theTool.AddedToInventory();
+
+            EquipTool(theTool);
+
+            if(handTool.replacedTool == theTool)
+            {
+                handTool.RemovedFromInventory();
+                tools.Remove(handTool);
+                tools.TrimExcess();
+            }
+
             theTool.transform.position = toolHolder.transform.position + theTool.toolHoldTransformOffset;
             theTool.transform.parent = toolHolder.transform;
             
-            EquipTool(theTool); 
+            
         }
     }
 
@@ -160,6 +197,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    #region Equip
     void EquipTool(Tool theTool)
     {
         curToolEquipped = null;
@@ -220,20 +258,7 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-
-    void TryUseCurrentTool(GameObject hitObject)
-    {
-        if (curToolEquipped && hitObject != null)
-        {
-            usingTool = true;
-            curToolEquipped.Use(hitObject);
-        }
-        else if (curToolEquipped && hitObject == null)
-        {
-            curToolEquipped.StopUse();
-            usingTool = false;
-        }
-    }
+    #endregion
 
     IEnumerator ChangeToolTimer()
     {
@@ -241,12 +266,5 @@ public class Inventory : MonoBehaviour
         yield return new WaitForSeconds(toolChangeBufferTime);
         canChangeTool = true;
         
-    }
-
-    IEnumerator ToolStopTimer()
-    {
-        yield return new WaitForSeconds(toolStopBufferTime);
-
-        usingTool = false;
     }
 }

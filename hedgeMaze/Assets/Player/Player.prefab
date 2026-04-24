@@ -74,11 +74,12 @@ MonoBehaviour:
   tools:
   - {fileID: 4969222703403571785}
   - {fileID: 5412613750009093979}
-  toolChangeBufferTime: 0.2
-  toolStopBufferTime: 0
-  usingTool: 0
   curToolEquipped: {fileID: 4969222703403571785}
+  usingTool: 0
+  tryingToUseTool: 0
+  toolChangeBufferTime: 0.2
   toolHolder: {fileID: 6430567972285032904}
+  handTool: {fileID: 6834944716405342975, guid: 4423a576801e07c4fa3bb9d7ee8f0862, type: 3}
 --- !u!54 &8024335684107343850
 Rigidbody:
   m_ObjectHideFlags: 0
