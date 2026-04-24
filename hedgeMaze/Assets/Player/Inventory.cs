@@ -228,7 +228,7 @@ public class Inventory : MonoBehaviour
             usingTool = true;
             curToolEquipped.Use(hitObject);
         }
-        else if (hitObject == null)
+        else if (curToolEquipped && hitObject == null)
         {
             curToolEquipped.StopUse();
             usingTool = false;
