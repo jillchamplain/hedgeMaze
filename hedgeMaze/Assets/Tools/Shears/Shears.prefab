@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolName: Shears
   model: {fileID: 3490406113631942537}
+  toolHoldTransformOffset: {x: 0, y: -0.06, z: 0}
   isEquipped: 0
   timeToCut: 8
   animator: {fileID: 0}

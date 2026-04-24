@@ -29377,9 +29377,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2190781268712652032, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376755576751379951, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 4626217214733772164, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_Cameras.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: toolHoldTransformOffset.y
+      value: -0.069
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412613750009093979, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: toolHoldTransformOffset.y
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalPosition.x

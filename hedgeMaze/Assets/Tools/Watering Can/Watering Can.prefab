@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolName: WateringCan
   model: {fileID: 7980938217203986107}
+  toolHoldTransformOffset: {x: 0, y: -0.069, z: 0}
   isEquipped: 0
   curWaterAmount: 0
   maxWaterAmount: 100
