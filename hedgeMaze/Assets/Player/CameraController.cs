@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
     [SerializeField] float sensX;
     [SerializeField] float sensY;
 
@@ -11,6 +13,25 @@ public class CameraController : MonoBehaviour
 
     float xRotation;
     float yRotation;
+
+    float mouseX;
+    public float mouseY;
+
+
+    public bool canLook = true;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,17 +42,26 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         //Mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+         mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+         mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        if (!canLook)
+        {
+            return;
+        }
 
         yRotation += mouseX;
         xRotation -= mouseY;
 
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+
         //Rotate camera and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
 
+    }
+
+    private void LateUpdate()
+    {
     }
 }

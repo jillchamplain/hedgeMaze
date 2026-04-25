@@ -48,7 +48,7 @@ MonoBehaviour:
   toolName: Hand
   model: {fileID: 6210613987254398000}
   toolHoldTransformOffset: {x: 0, y: 0, z: 0}
-  isEquipped: 0
+  isEquipped: 1
   replacedTool: {fileID: 0}
 --- !u!1 &6210613987254398000
 GameObject:
@@ -65,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2426626139282461134
 Transform:
   m_ObjectHideFlags: 0

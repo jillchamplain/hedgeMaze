@@ -29486,6 +29486,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9008510293467874453, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: canLook
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29974,21 +29978,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.71032965
-      objectReference: {fileID: 0}
-    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.06695261
-      objectReference: {fileID: 0}
-    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6978854
-      objectReference: {fileID: 0}
-    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.062491678
+    - target: {fileID: 581767044216473359, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 3869105626133080847, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
       propertyPath: m_Name
@@ -30035,12 +30027,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: refillAmount
-      value: 10
+      propertyPath: maxUpSpeed
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
-      propertyPath: refillPumpTime
-      value: 2
+      propertyPath: sensitivity
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: wateringCan
+      value: 
+      objectReference: {fileID: 401243397}
+    - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: maxDownSpeed
+      value: 0.033
+      objectReference: {fileID: 0}
+    - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: speedToPlayWater
+      value: 0.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852119023744780524, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: prewarm
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -175,7 +175,7 @@ public class WateringCan : Tool
     public void Refill(Fountain theFountain)
     {
         Debug.Log("Watering Can is refilling");
-        curWaterAmount += theFountain.refillAmount;
+        curWaterAmount += theFountain.refillAmount * Time.deltaTime;
         if (curWaterAmount > maxWaterAmount)
             curWaterAmount = maxWaterAmount;
     }

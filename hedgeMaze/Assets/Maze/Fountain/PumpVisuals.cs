@@ -18,6 +18,8 @@ public class PumpVisuals : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        amount = Mathf.Clamp(amount, 0, 1);
+
         float angle = Mathf.Lerp(minAngle, maxAngle, amount);
         handle.transform.localEulerAngles = new Vector3(handle.transform.localEulerAngles.x, handle.transform.localEulerAngles.y, angle);
         pusher.eulerAngles = Vector3.zero;
