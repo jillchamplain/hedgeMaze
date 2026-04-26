@@ -32,7 +32,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log("Returning null");
         return null;
     }
-    private void Start()
+    private void Awake()
     {
         if(instance == null)
             instance = this;

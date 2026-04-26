@@ -29438,10 +29438,6 @@ PrefabInstance:
       propertyPath: m_Cameras.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
-      propertyPath: toolHoldTransformOffset.y
-      value: -0.069
-      objectReference: {fileID: 0}
     - target: {fileID: 5412613750009093979, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: toolHoldTransformOffset.y
       value: -0.06
@@ -29981,6 +29977,22 @@ PrefabInstance:
     - target: {fileID: 581767044216473359, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.71032965
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.06695261
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6978854
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099290734416114695, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.062491678
       objectReference: {fileID: 0}
     - target: {fileID: 3869105626133080847, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
       propertyPath: m_Name

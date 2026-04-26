@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Ubisoft.Systems.Audio;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ public class WateringCan : Tool
     [SerializeField] Movement playerMovement;
     [SerializeField] Animator animator;
     [SerializeField] ParticleSystem waterParticleSystem;
-    [SerializeField] SoundStreamSO wateringNoise;
+    [SerializeField] AudioClip wateringNoise;
+    [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject refillCollider;
     [SerializeField] Fountain parentFountain;
     
@@ -77,13 +79,20 @@ public class WateringCan : Tool
     {
         isEquipped = false;
         isWatering = false;
-        waterParticleSystem.Stop();
+        StopEffects();
     }
 
     public override void StopUse()
     {
         isWatering = false;
+        StopEffects();
+    }
+
+    void StopEffects()
+    {
+        audioSource.DOComplete();
         waterParticleSystem.Stop();
+        audioSource.DOFade(0, 0.75f);
     }
 
     public override void Use(GameObject hitObject)
@@ -93,13 +102,16 @@ public class WateringCan : Tool
         {
             if (!isWatering)
             {
-                AudioManager.instance.PlayAudio(new AudioRequest(wateringNoise).SetLooping(true));
-                Debug.Log("Play my audios");
+                audioSource.DOComplete();
+                audioSource.DOFade(1, 0.5f);
+                audioSource.clip = wateringNoise;
+                audioSource.loop = true;
+                audioSource.Play();
             }
 
             isWatering = true;
-
-            if(curWaterAmount > 0)
+            Water();
+            if (curWaterAmount > 0)
                 hitObject.GetComponent<Flower>().Water(waterGivenAmount);
 
             hitObject.GetComponentInParent<FlowerPatch>().CheckIfWatered();
@@ -128,7 +140,7 @@ public class WateringCan : Tool
         curWaterAmount -= waterDepleteAmount * Time.deltaTime;
         if (curWaterAmount < 0)
         {
-            waterParticleSystem.Stop();
+            StopEffects();
             curWaterAmount = 0;
         }
     }
@@ -139,7 +151,7 @@ public class WateringCan : Tool
         if (curWaterAmount < 0)
         {
             curWaterAmount = 0;
-            waterParticleSystem.Stop();
+            StopEffects();
         }
     }
 
@@ -149,7 +161,7 @@ public class WateringCan : Tool
         if (curWaterAmount < 0)
         {
             curWaterAmount = 0;
-            waterParticleSystem.Stop();
+            StopEffects();
         }
     }
 
