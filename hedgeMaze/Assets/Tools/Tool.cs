@@ -6,6 +6,7 @@ public abstract class Tool : MonoBehaviour
     [SerializeField] public GameObject model;
     [SerializeField] public Vector3 toolHoldTransformOffset;
     public bool isEquipped = false;
+    public bool isInInventory = false;
 
     public abstract void AddedToInventory();
 

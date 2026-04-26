@@ -22,7 +22,14 @@ public class Inventory : MonoBehaviour
     {
         if(instance == null)
             instance = this;
+        TutorialManager.instance.TutorialDisplay("Tools");
+
+        foreach(Tool tool in tools)
+        {
+            tool.isInInventory = true;
+        }
     }
+
 
     private void Update()
     {

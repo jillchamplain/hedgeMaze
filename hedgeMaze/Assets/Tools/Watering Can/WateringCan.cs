@@ -44,7 +44,7 @@ public class WateringCan : Tool
 
     private void FixedUpdate()
     {
-        if (playerMovement.GetSprinting() && isEquipped)
+        if (playerMovement.GetSprinting() && isInInventory)
         {
             SprintDepleteWater();
         }
@@ -52,6 +52,7 @@ public class WateringCan : Tool
 
     public override void AddedToInventory()
     {
+        isInInventory = true;
         parentFountain.wateringCan = null;
         parentFountain = null;
         refillCollider.SetActive(false);
@@ -61,6 +62,7 @@ public class WateringCan : Tool
 
     public override void RemovedFromInventory()
     {
+        isInInventory = false;
         isEquipped = false;
         refillCollider.SetActive(true);
         isWatering = false;
