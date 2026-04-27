@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6379903174194228001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.00072471, y: 0.013371, z: 0}
+  m_LocalScale: {x: 0.61109, y: 0.8662812, z: 0.61109}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,7 +50,8 @@ MonoBehaviour:
   isWatered: 0
   waterValue: 0
   waterRequirement: 100
-  waterHeightIncrease: 0.02
+  waterHeightIncrease: 0.01
+  waterSizeIncrease: 0.04
   meshRenderer: {fileID: 6830034132165742476}
   waterStemMaterial: {fileID: 2100000, guid: 86a4e8eaf2919f44581b1ea04b1cebe8, type: 2}
   waterBudMaterial: {fileID: 2100000, guid: 79b63cfe056d250449895caaef687d2b, type: 2}

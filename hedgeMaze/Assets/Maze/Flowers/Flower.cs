@@ -6,6 +6,7 @@ public class Flower : MonoBehaviour
     [SerializeField] float waterValue;
     [SerializeField] float waterRequirement;
     [SerializeField] float waterHeightIncrease;
+    [SerializeField] float waterSizeIncrease;
     [Header("References")]
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] Material waterStemMaterial;
@@ -29,6 +30,7 @@ public class Flower : MonoBehaviour
             return;
         waterValue += waterAmount * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y + (waterHeightIncrease * Time.deltaTime), transform.position.z);
+        transform.localScale = new Vector3(transform.localScale.x + (waterSizeIncrease * Time.deltaTime), transform.localScale.y + (waterSizeIncrease * Time.deltaTime), transform.localScale.z + (waterSizeIncrease * Time.deltaTime));
         if (waterValue > waterRequirement)
         {
             isWatered = true;
