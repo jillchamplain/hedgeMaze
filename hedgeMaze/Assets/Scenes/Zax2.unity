@@ -29596,6 +29596,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: splash
+      value: 
+      objectReference: {fileID: 11400000, guid: 400c65ab778ab1342875535f8886e7db, type: 2}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1672228400}
@@ -29603,6 +29607,10 @@ PrefabInstance:
       propertyPath: wateringNoise
       value: 
       objectReference: {fileID: 8300000, guid: 303fa4d9545a7904dac4573d96fbbbe4, type: 3}
+    - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: splashCooldown
+      value: 0.33
+      objectReference: {fileID: 0}
     - target: {fileID: 4969222703403571785, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: toolHoldTransformOffset.y
       value: -0.069
@@ -29650,6 +29658,14 @@ PrefabInstance:
     - target: {fileID: 7417613557088966332, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8103953358729254361, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: splash
+      value: 
+      objectReference: {fileID: 11400000, guid: 400c65ab778ab1342875535f8886e7db, type: 2}
+    - target: {fileID: 8103953358729254361, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
+      propertyPath: splashCooldown
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 9008510293467874453, guid: 0479e4e75f57ae94d8742c73ca01048b, type: 3}
       propertyPath: canLook
@@ -30212,6 +30228,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
+      propertyPath: waterDrop
+      value: 
+      objectReference: {fileID: 11400000, guid: 97bf179554bd5cf4cbc6b56da6e4ae2c, type: 2}
     - target: {fileID: 4959922048568764826, guid: 31d45738bbaa05e41aa04f1c39c54d81, type: 3}
       propertyPath: maxUpSpeed
       value: 0.025

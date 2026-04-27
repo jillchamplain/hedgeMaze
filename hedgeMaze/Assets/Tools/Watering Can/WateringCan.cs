@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using Ubisoft.Systems.Audio;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class WateringCan : Tool
     [SerializeField] float waterGivenAmount;
     [SerializeField] float passiveWaterDepleteAmount;
     [SerializeField] float sprintWaterDepleteAmount;
+    [SerializeField] float splashCooldown;
+
+    float splashTimer;
 
     [Header("References")]
     [SerializeField] Movement playerMovement;
@@ -21,7 +25,8 @@ public class WateringCan : Tool
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject refillCollider;
     [SerializeField] Fountain parentFountain;
-    
+    [SerializeField] SoundStreamSO splash;
+
     public bool isRefilling = false;
     bool isWatering = false;
     bool shouldSprintDeplete = false;
@@ -162,7 +167,18 @@ public class WateringCan : Tool
         {
             curWaterAmount = 0;
             StopEffects();
+            return;
         }
+
+
+        splashTimer += Time.deltaTime;
+        if (splashTimer > splashCooldown)
+        {
+            splashTimer = 0;
+            AudioManager.instance.PlayAudio(new AudioRequest(splash).SetPoint(transform.position));
+        }
+
+
     }
 
     public void StartRefill(Fountain theFountain)
