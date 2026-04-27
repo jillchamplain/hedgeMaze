@@ -1,4 +1,5 @@
 using System.Collections;
+using Ubisoft.Systems.Audio;
 using UnityEngine;
 
 public class Fountain : MonoBehaviour
@@ -15,11 +16,11 @@ public class Fountain : MonoBehaviour
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] public WateringCan wateringCan;
     [SerializeField] public GameObject wateringCanHolder;
+    [SerializeField] SoundStreamSO waterDrop;
     bool isPumping = false;
 
 
 
-    bool pumpStopped = false;
     Coroutine pumpStopCoroutine;
 
     public void Pump()
@@ -27,8 +28,6 @@ public class Fountain : MonoBehaviour
         if (!wateringCan)
             return;
 
-        isPumping = true;
-        pumpStopped = false;
 
         if (pumpStopCoroutine != null)
             StopCoroutine(pumpStopCoroutine);
@@ -42,47 +41,42 @@ public class Fountain : MonoBehaviour
             float change = Mathf.Clamp(MousePos / sensitivity, 0, maxUpSpeed);
             if (change > speedToPlayWater)
             {
-                particleSystem.Play();
+                if (isPumping == false)
+                {
+                    Debug.Log("WHYYYY");
+                    isPumping = true;
+                    AudioManager.instance.PlayAudio(new AudioRequest(waterDrop).SetPoint(transform.position));
+                    particleSystem.Play();
+                }
                 if (wateringCan)
                     wateringCan.Refill(this);
             }
-            else
-            {
-                particleSystem.Stop();
-            }
+
 
             visuals.amount += change;
         }
-        if (MousePos < 0)
+        if (MousePos <= 0)
         {
             float change = Mathf.Clamp(MousePos / sensitivity, 0, maxDownSpeed);
             visuals.amount += MousePos / sensitivity;
             particleSystem.Stop();
+            isPumping = false;
         }
+    }
 
+    private void Update()
+    {
+        if (!isPumping)
+        {
+            particleSystem.Stop();
+        }
     }
 
     IEnumerator WaitForPumpStop()
     {
         yield return null; 
-        pumpStopped = true;
         isPumping = false;
         CameraController.instance.canLook = true;
     }
 
-    private void Update()
-    {
-
-    }
-
-    IEnumerator PumpTimer()
-    {
-        isPumping = true;
-        particleSystem.Play();
-        yield return new WaitForSeconds(refillPumpTime);
-        if(wateringCan)
-            wateringCan.Refill(this);
-        particleSystem.Stop();
-        isPumping = false;
-    }
 }
