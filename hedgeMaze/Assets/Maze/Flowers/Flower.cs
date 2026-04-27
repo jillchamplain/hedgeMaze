@@ -8,7 +8,8 @@ public class Flower : MonoBehaviour
     [SerializeField] float waterHeightIncrease;
     [Header("References")]
     [SerializeField] MeshRenderer meshRenderer;
-    [SerializeField] Material waterMaterial;
+    [SerializeField] Material waterStemMaterial;
+    [SerializeField] Material waterBudMaterial;
     FlowerPatch flowerPatch;
 
     private void Awake()
@@ -31,7 +32,13 @@ public class Flower : MonoBehaviour
         if (waterValue > waterRequirement)
         {
             isWatered = true;
-            meshRenderer.material = waterMaterial;
+            Material[] newMaterials = new Material[2];
+            newMaterials[0] = waterStemMaterial;
+            newMaterials[1] = waterBudMaterial;
+
+            meshRenderer.sharedMaterials = newMaterials;
+
+            Debug.Log($"Changing materials {isWatered}");
         }
     }
 }

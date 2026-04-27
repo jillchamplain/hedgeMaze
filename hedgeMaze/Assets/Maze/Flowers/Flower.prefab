@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.148205, z: 0.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,7 +52,8 @@ MonoBehaviour:
   waterRequirement: 100
   waterHeightIncrease: 0.02
   meshRenderer: {fileID: 6830034132165742476}
-  waterMaterial: {fileID: 2100000, guid: 86a4e8eaf2919f44581b1ea04b1cebe8, type: 2}
+  waterStemMaterial: {fileID: 2100000, guid: 86a4e8eaf2919f44581b1ea04b1cebe8, type: 2}
+  waterBudMaterial: {fileID: 2100000, guid: 79b63cfe056d250449895caaef687d2b, type: 2}
 --- !u!33 &5202628441068061201
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6379903174194228001}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -6543867026791341853, guid: d270f05c996186441b2304c3713181a7, type: 3}
 --- !u!23 &6830034132165742476
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84,7 +85,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79b63cfe056d250449895caaef687d2b, type: 2}
+  - {fileID: -9117483709511198939, guid: d270f05c996186441b2304c3713181a7, type: 3}
+  - {fileID: -635627586194204996, guid: d270f05c996186441b2304c3713181a7, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,5 +127,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.25, y: 0.5, z: 0.25}
+  m_Center: {x: 0, y: 0.1, z: 0}
