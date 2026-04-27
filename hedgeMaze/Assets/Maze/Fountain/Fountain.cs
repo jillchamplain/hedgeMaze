@@ -21,7 +21,6 @@ public class Fountain : MonoBehaviour
 
 
 
-    bool pumpStopped = false;
     Coroutine pumpStopCoroutine;
 
     public void Pump()
@@ -29,7 +28,6 @@ public class Fountain : MonoBehaviour
         if (!wateringCan)
             return;
 
-        pumpStopped = false;
 
         if (pumpStopCoroutine != null)
             StopCoroutine(pumpStopCoroutine);
@@ -45,10 +43,11 @@ public class Fountain : MonoBehaviour
             {
                 if (isPumping == false)
                 {
+                    Debug.Log("WHYYYY");
                     isPumping = true;
                     AudioManager.instance.PlayAudio(new AudioRequest(waterDrop).SetPoint(transform.position));
+                    particleSystem.Play();
                 }
-                particleSystem.Play();
                 if (wateringCan)
                     wateringCan.Refill(this);
             }
@@ -76,7 +75,6 @@ public class Fountain : MonoBehaviour
     IEnumerator WaitForPumpStop()
     {
         yield return null; 
-        pumpStopped = true;
         isPumping = false;
         CameraController.instance.canLook = true;
     }

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: SprintSplash
   m_EditorClassIdentifier: 
   clip:
-  - {fileID: 8300000, guid: a1355a94e05137549a36cf326592ca46, type: 3}
-  volume: 1
+  - {fileID: 8300000, guid: 4ecf23b2d793ffe45ae2cfe59ad95e7e, type: 3}
+  volume: 0.1
   doRandomPitch: 1
   pitch: 1
-  pitchRange: {x: 0.9, y: 1}
+  pitchRange: {x: 0.9, y: 1.1}
   doSpatialAudio: 0
   minDistance: 0
   maxDistance: 2

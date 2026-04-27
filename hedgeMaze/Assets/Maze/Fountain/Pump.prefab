@@ -5182,7 +5182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a16c7ad408419a4789389f3aa4d1554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refillAmount: 10
+  refillAmount: 25
   refillPumpTime: 2
   sensitivity: 240
   maxUpSpeed: 0.025
@@ -5192,6 +5192,7 @@ MonoBehaviour:
   particleSystem: {fileID: 8852119023744780524}
   wateringCan: {fileID: 0}
   wateringCanHolder: {fileID: 3544379815172674691}
+  waterDrop: {fileID: 11400000, guid: 97bf179554bd5cf4cbc6b56da6e4ae2c, type: 2}
 --- !u!114 &4536174629266614253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5894,7 +5895,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8623783675272343376}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0031543556, y: -0.008799399, z: 0.09153093, w: -0.99575835}
+  m_LocalRotation: {x: 0.06695261, y: 0.6978854, z: 0.062491678, w: -0.71032965}
   m_LocalPosition: {x: -0.116, y: 0.1085, z: -0.0011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
